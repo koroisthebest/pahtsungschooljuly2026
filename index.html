@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pah Tsung – Trilingual School</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d2240;
+      --navy-light: #163360;
+      --gold: #F5C400;
+      --gold-light: #FFD740;
+      --white: #ffffff;
+      --off-white: #f8f5f0;
+      --gray: #6b7280;
+      --light-gray: #e5e7eb;
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--navy);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 72px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,196,0,0.2);
+      transition: box-shadow 0.3s;
+    }
+
+    nav.scrolled { box-shadow: 0 4px 24px rgba(13,34,64,0.1); }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-icon {
+      width: 40px; height: 40px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--navy);
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-cta {
+      background: var(--navy);
+      color: var(--white);
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-cta:hover { background: var(--gold); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--navy);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0d2240 0%, #1a3a6b 50%, #0d2240 100%);
+    }
+
+    .hero-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      background-image: radial-gradient(circle at 2px 2px, var(--gold) 1px, transparent 0);
+      background-size: 40px 40px;
+    }
+
+    .hero-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: url('https://i.ibb.co.com/CKy44q5b/Gedung-Sekolah-Pah-Tsung-Drone-resize.jpg') center/cover no-repeat;
+      opacity: 0.18;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 24px;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      border: 1px solid rgba(245,196,0,0.4);
+      padding: 6px 16px;
+      border-radius: 20px;
+    }
+
+
+    .hero-chinese {
+      font-family: var(--font-display);
+      font-size: clamp(19px, 3vw, 36px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+      letter-spacing: 2px;
+    }
+
+    .hero-chinese .cn-white { color: var(--white); }
+    .hero-chinese .cn-gold  { color: var(--gold); }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6vw, 72px);
+      color: var(--white);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero h1 span { color: var(--gold); }
+
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: rgba(255,255,255,0.7);
+      max-width: 540px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 14px 32px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.4);
+      padding: 14px 32px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    .hero-scroll span {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll svg { opacity: 0.4; }
+
+    /* ── STATS ── */
+    .stats-bar {
+      background: var(--off-white);
+      padding: 60px 48px;
+    }
+
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      text-align: center;
+    }
+
+    .stat-item {}
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-number sup {
+      font-size: 24px;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    /* ── ABOUT ── */
+    .section {
+      padding: 100px 48px;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 2px;
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .btn-link:hover { color: var(--gold); gap: 12px; }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image-wrap img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .about-image-badge {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      background: var(--navy);
+      color: var(--white);
+      padding: 20px 24px;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(13,34,64,0.25);
+    }
+
+    .badge-number {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+    }
+
+    .badge-text {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 4px;
+    }
+
+    /* ── LEARNING JOURNEY ── */
+    .learning { background: var(--navy); }
+
+    .learning .section-title { color: var(--white); }
+    .learning .section-eyebrow { color: var(--gold); }
+
+    .learning-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      gap: 32px;
+    }
+
+    .learning-intro-left { flex: 1; }
+
+    .learning-intro p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      max-width: 460px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(245,196,0,0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(245,196,0,0.4);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    .card-grade {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .card h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .card-link:hover { gap: 10px; }
+
+    /* ── CAMPUS ── */
+    .campus { background: var(--off-white); }
+
+    .campus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .campus-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(13,34,64,0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .campus-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(13,34,64,0.13);
+    }
+
+    .campus-card img {
+      width: 100%; height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .campus-card-body { padding: 20px; }
+
+    .campus-card h4 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .campus-card p {
+      font-size: 13px;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      padding: 80px 48px;
+      text-align: center;
+    }
+
+    .cta-banner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 48px);
+      color: var(--white);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+
+    .cta-banner h2 span { color: var(--gold); }
+
+    .cta-banner p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #08192e;
+      padding: 60px 48px 32px;
+    }
+
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-brand {}
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .footer-logo-icon {
+      width: 36px; height: 36px;
+      background: var(--gold);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .footer-logo-text {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer-col h5 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li { margin-bottom: 10px; }
+
+    .footer-col ul li a {
+      text-decoration: none;
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--white); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ── DIVIDER ── */
+    .gold-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--gold);
+      margin-bottom: 24px;
+      border-radius: 2px;
+    }
+
+
+    /* ── TESTIMONI ── */
+    .testimoni { background: var(--off-white); }
+
+    .testimoni-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 48px;
+    }
+
+    .testimoni-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(13,34,64,0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .testimoni-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(13,34,64,0.13);
+    }
+
+    .testimoni-video {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      background: var(--navy);
+    }
+
+    .testimoni-video iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .testimoni-caption {
+      padding: 20px 24px;
+    }
+
+    .testimoni-caption h4 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .testimoni-caption p {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    .testimoni-caption .testimoni-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .testimoni-grid { grid-template-columns: 1fr; }
+    }
+
+
+    /* ── KESEHARIAN ── */
+    .keseharian { background: var(--white); }
+
+    .keseharian-widget {
+      margin-top: 48px;
+    }
+
+    .keseharian-footer {
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    .keseharian-footer a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--navy);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .keseharian-footer a:hover {
+      background: var(--gold);
+      color: var(--navy);
+      transform: translateY(-2px);
+    }
+
+    .keseharian-footer a svg {
+      width: 18px; height: 18px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .section { padding: 60px 24px; }
+      .stats-bar { padding: 48px 24px; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-image-wrap { display: block; margin-top: 32px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .campus-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .learning-intro { flex-direction: column; }
+    }
+
+    @media (max-width: 600px) {
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .cta-banner { padding: 60px 24px; }
+      footer { padding: 48px 24px 24px; }
+    }
+
+    /* ── MOBILE NAV ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+      z-index: 110;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0; right: 0;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(12px);
+      z-index: 99;
+      border-bottom: 2px solid var(--gold);
+      box-shadow: 0 8px 32px rgba(13,34,64,0.12);
+      padding: 16px 0 24px;
+      transform: translateY(-10px);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .mobile-menu.open {
+      display: block;
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-menu ul {
+      list-style: none;
+      padding: 0 24px;
+    }
+    .mobile-menu ul li {
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .mobile-menu ul li:last-child { border-bottom: none; }
+    .mobile-menu ul li a {
+      display: block;
+      padding: 14px 4px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      transition: color 0.2s, padding-left 0.2s;
+    }
+    .mobile-menu ul li a:hover {
+      color: var(--gold);
+      padding-left: 12px;
+    }
+    .mobile-menu-cta {
+      padding: 16px 24px 0;
+    }
+    .mobile-menu-cta a {
+      display: block;
+      background: var(--navy);
+      color: var(--white);
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .mobile-menu-cta a:hover { background: var(--gold); color: var(--navy); }
+
+    @media (max-width: 900px) {
+      .hamburger { display: flex; }
+      .nav-right { display: none; }
+    }
+
+
+    /* ── ALUMNI GLOBE ── */
+    .globe-section {
+      background: var(--navy);
+      padding: 80px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .globe-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 18%, rgba(255,255,255,0.15) 0%, transparent 100%),
+        radial-gradient(1px 1px at 72%  9%, rgba(255,255,255,0.10) 0%, transparent 100%),
+        radial-gradient(1px 1px at 38% 55%, rgba(255,255,255,0.08) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.12) 0%, transparent 100%),
+        radial-gradient(1px 1px at 54% 78%, rgba(255,255,255,0.07) 0%, transparent 100%),
+        radial-gradient(1px 1px at 28% 88%, rgba(255,255,255,0.09) 0%, transparent 100%),
+        radial-gradient(1px 1px at 91% 72%, rgba(255,255,255,0.11) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .globe-section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .globe-left {}
+    .globe-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .globe-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+    .globe-title span { color: var(--gold); }
+    .globe-subtitle {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 32px;
+    }
+    .globe-stats {
+      display: flex;
+      gap: 0;
+      border: 1px solid rgba(245,196,0,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 32px;
+      width: fit-content;
+    }
+    .globe-stat {
+      padding: 16px 28px;
+      background: rgba(255,255,255,0.04);
+      text-align: center;
+      border-right: 1px solid rgba(245,196,0,0.2);
+    }
+    .globe-stat:last-child { border-right: none; }
+    .globe-stat-num {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .globe-stat-label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .globe-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      margin-bottom: 28px;
+    }
+    .globe-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+    .globe-legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .globe-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 2px solid rgba(245,196,0,0.4);
+      padding-bottom: 2px;
+      cursor: pointer;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-family: var(--font-body);
+      transition: color 0.2s, gap 0.2s, border-color 0.2s;
+    }
+    .globe-more-btn:hover { color: var(--white); border-color: var(--white); gap: 12px; }
+
+    /* Campus list (hidden by default) */
+    .globe-campus-list {
+      display: none;
+      margin-top: 28px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 8px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .globe-campus-list.show { display: grid; }
+    .globe-campus-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(245,196,0,0.1);
+      border-radius: 8px;
+      padding: 10px 12px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .globe-campus-card:hover {
+      border-color: rgba(245,196,0,0.3);
+      background: rgba(255,255,255,0.07);
+    }
+    .globe-campus-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .globe-campus-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.4;
+    }
+    .globe-campus-city {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 2px;
+    }
+
+    /* Globe canvas */
+    .globe-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .globe-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+    }
+    .globe-glow {
+      position: absolute;
+      inset: -18%;
+      background: radial-gradient(circle at 50% 50%, rgba(245,196,0,0.08) 0%, transparent 65%);
+      pointer-events: none;
+      border-radius: 50%;
+    }
+    #globe-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      display: block;
+    }
+    #globe-canvas:active { cursor: grabbing; }
+    #globe-tooltip {
+      position: absolute;
+      background: rgba(13,34,64,0.97);
+      border: 1px solid rgba(245,196,0,0.3);
+      border-radius: 10px;
+      padding: 10px 16px;
+      pointer-events: none;
+      display: none;
+      white-space: nowrap;
+      z-index: 10;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+    .tt-name {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .tt-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .tt-city { font-size: 11px; color: rgba(255,255,255,0.45); padding-left: 14px; }
+    .globe-hint {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SVG label kampus — text only */
+    .gl-label-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      dominant-baseline: middle;
+      paint-order: stroke fill;
+      stroke: rgba(13,34,64,0.9);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
+    .gl-label-city {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      fill: rgba(255,255,255,0.55);
+      dominant-baseline: middle;
+      paint-order: stroke fill;
+      stroke: rgba(13,34,64,0.9);
+      stroke-width: 3px;
+    }
+    .gl-label-group {
+      transition: opacity 0.5s ease;
+    }
+
+    @media (max-width: 900px) {
+      .globe-section { padding: 60px 24px; }
+      .globe-section-inner { grid-template-columns: 1fr; gap: 40px; }
+      .globe-right { order: -1; }
+      .globe-stats { width: 100%; }
+      .globe-stat { flex: 1; padding: 14px 12px; }
+    }
+
+  </style>
+  <script>
+
+    function toggleCampusList() {
+      var list = document.getElementById('globe-campus-list');
+      var arrow = document.getElementById('globe-btn-arrow');
+      var btn = document.querySelector('.globe-more-btn');
+      if (list.classList.contains('show')) {
+        list.classList.remove('show');
+        arrow.style.transform = 'rotate(0deg)';
+        btn.childNodes[0].textContent = 'Tempat Kami Melanjutkan Pendidikan ';
+      } else {
+        list.classList.add('show');
+        arrow.style.transform = 'rotate(90deg)';
+        btn.childNodes[0].textContent = 'Sembunyikan Daftar ';
+      }
+    }
+
+    function toggleMenu() {
+      var btn = document.getElementById('hamburger');
+      var menu = document.getElementById('mobileMenu');
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    }
+    function closeMenu() {
+      var btn = document.getElementById('hamburger');
+      var menu = document.getElementById('mobileMenu');
+      if (btn) btn.classList.remove('open');
+      if (menu) menu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  </script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+  <img src="https://i.ibb.co.com/1fMy5VXb/logo-Pah-Tsung-text-biru-utk-video.png" style="height:44px;object-fit:contain;" alt="Logo" />
+</a>
+    <ul class="nav-links">
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#pembelajaran">Jenjang Pendidikan</a></li>
+      <li><a href="#kampus">Fasilitas</a></li>
+      <li><a href="#testimoni">Testimoni</a></li>
+      <li><a href="#keseharian">Keseharian</a></li>
+      <li><a href="#pendaftaran">Pendaftaran</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#kontak" class="btn-cta"><span class="__cf_email__" data-cfemail="462f2820290636272e32353328216835252e682f22">[Kontak]</span></a>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#tentang" onclick="closeMenu()">Tentang</a></li>
+      <li><a href="#pembelajaran" onclick="closeMenu()">Jenjang Pendidikan</a></li>
+      <li><a href="#kampus" onclick="closeMenu()">Fasilitas</a></li>
+      <li><a href="#testimoni" onclick="closeMenu()">Testimoni</a></li>
+      <li><a href="#keseharian" onclick="closeMenu()">Keseharian</a></li>
+      <li><a href="#pendaftaran" onclick="closeMenu()">Pendaftaran</a></li>
+    </ul>
+    <div class="mobile-menu-cta">
+      <a href="#kontak" onclick="closeMenu()">Hubungi Kami</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-img-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">三语学校 - Trilingual School - Sekolah Tiga Bahasa</span>
+      <div class="hero-chinese"><span class="cn-white">全球视野</span> <span class="cn-gold">精通三种语言</span></div>
+      <h1>Think Global<br><span>Speak Trilingual</span></h1>
+      <p>Pah Tsung School with an integrated curriculum that empowers students to excel in Mandarin, English, and Bahasa Indonesia with confidence and purpose.</p>
+      <div class="hero-buttons">
+        <a href="#pembelajaran" class="btn-primary">Jelajahi Program</a>
+        <a href="#tentang" class="btn-outline">Tentang Pah Tsung School</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Bahasa pengantar: Mandarin, Inggris, dan Bahasa Indonesia</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">A</div>
+        <div class="stat-label">Akreditasi A BAN-S/M — standar pendidikan terbaik nasional</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Jenjang pendidikan: TK, SD, SMP, dan SMA dalam satu kompleks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">17<sup>+</sup></div>
+        <div class="stat-label">Guru profesional berpengalaman, termasuk tenaga pengajar native speaker</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ALUMNI GLOBE -->
+  <section class="globe-section" id="alumni">
+    <div class="globe-section-inner">
+      <div class="globe-left">
+        <span class="globe-eyebrow">Jejak Alumni Sekolah Pah Tsung</span>
+        <div style="width:48px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:20px;"></div>
+        <h2 class="globe-title">di Kampus <span>Seluruh Dunia</span></h2>
+        <p class="globe-subtitle">Tempat para alumni Pah Tsung belajar, berkarya, dan menorehkan prestasi di penjuru bumi dari Asia hingga Eropa, dari Australia hingga Amerika.</p>
+        <div class="globe-stats">
+          <div class="globe-stat">
+            <div class="globe-stat-num">20</div>
+            <div class="globe-stat-label">Kampus</div>
+          </div>
+          <div class="globe-stat">
+            <div class="globe-stat-num">7</div>
+            <div class="globe-stat-label">Negara</div>
+          </div>
+          <div class="globe-stat">
+            <div class="globe-stat-num">3</div>
+            <div class="globe-stat-label">Benua</div>
+          </div>
+        </div>
+        <div class="globe-legend">
+          <div class="globe-legend-item"><div class="globe-legend-dot" style="background:#60a5fa;"></div>Asia</div>
+          <div class="globe-legend-item"><div class="globe-legend-dot" style="background:#10b981;"></div>Oseania</div>
+          <div class="globe-legend-item"><div class="globe-legend-dot" style="background:#f59e0b;"></div>Eropa</div>
+
+        </div>
+        <button class="globe-more-btn" onclick="toggleCampusList()">
+          Tempat Kami Melanjutkan Pendidikan
+          <svg id="globe-btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform 0.3s;">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+        <div class="globe-campus-list" id="globe-campus-list"></div>
+      </div>
+      <div class="globe-right">
+        <div class="globe-wrap" id="globe-wrap">
+          <div class="globe-glow"></div>
+          <canvas id="globe-canvas"></canvas>
+          <svg id="globe-svg-overlay" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+          <div id="globe-tooltip">
+            <div class="tt-name" id="tt-name"></div>
+            <div class="tt-city" id="tt-city"></div>
+          </div>
+        </div>
+        <p class="globe-hint">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+          </svg>
+          Drag untuk memutar &nbsp;·&nbsp; Hover titik untuk detail
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="tentang">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div>
+          <span class="section-eyebrow">Tentang Pah Tsung School</span>
+          <div class="gold-divider"></div>
+          <p style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:10px;"> 校训 - Moto Sekolah Pah Tsung</p>
+          <p style="font-size:clamp(14px, 2vw, 22px);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:4px;letter-spacing:1px;">乐观 , 进取 , 合作 , 奉献</p>
+          <h2 class="section-title" style="margin-top:0;">Optimistis, Progresif, Kooperatif, Dedikatif</h2>
+          <p class="section-body">
+            Sekolah Pah Tsung adalah sekolah trilingual terkemuka di Jakarta Barat yang mengintegrasikan tiga bahasa yaitu Mandarin, Inggris, dan Bahasa Indonesia dalam setiap aspek pembelajaran. Berlokasi di Kompleks City Park, Cengkareng, kami berkomitmen menghasilkan peserta didik yang bermoral, berkarakter, dan unggul dalam prestasi menghadapi globalisasi.
+          </p>
+          <p class="section-body">
+            Dengan Kurikulum Merdeka yang progresif dan didukung oleh guru-guru berpengalaman termasuk native speaker, Pah Tsung School membekali siswa dengan kemampuan bahasa Mandarin yang kuat sekaligus membangun karakter yang disiplin, toleran, dan siap bersaing di dunia internasional.
+          </p>
+          <a href="tentang.html" class="btn-link">
+            Pelajari Lebih Lanjut tentang Pah Tsung
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+        <div class="about-image-wrap">
+          <img src="https://i.ibb.co.com/m5D3vXY5/foto-aset-web-siswa-pah-tsung.png" alt="Siswa Pah Tsung"/>
+          <div class="about-image-badge">
+            <span class="badge-number">三语</span>
+            <div class="badge-text">Trilingual<br>School</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARNING JOURNEY -->
+  <section class="section learning" id="pembelajaran">
+    <div class="section-inner">
+      <div class="learning-intro">
+        <div class="learning-intro-left">
+          <span class="section-eyebrow">Jenjang Pendidikan</span>
+          <div class="gold-divider"></div>
+          <h2 class="section-title">Satu Atap untuk Semua Jenjang</h2>
+        </div>
+        <p>Dari usia dini hingga SMA, Pah Tsung School mendampingi tumbuh kembang anak Anda dengan pendidikan trilingual yang terintegrasi.</p>
+      </div>
+      <div class="cards-grid">
+        <a href="jenjang-pendidikan.html#tk" style="text-decoration:none;color:inherit;display:block;" class="card">
+          <img class="card-img" src="https://i.ibb.co.com/fz1f8ygx/TK-banner-web.jpg" alt="TK"/>
+          <div class="card-body">
+            <span class="card-grade">Taman Kanak-Kanak (Nursery, Playgroup & Kindergarten)</span>
+            <h3>TK Pah Tsung</h3>
+            <p>Fondasi awal pengenalan tiga bahasa melalui kegiatan bermain yang menyenangkan. Anak-anak diperkenalkan dengan Mandarin, Inggris, dan Bahasa Indonesia sejak dini dalam lingkungan yang aman, hangat, dan penuh kasih sayang.</p>
+            <span class="card-link">
+              Pelajari
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        <a href="jenjang-pendidikan.html#sd" style="text-decoration:none;color:inherit;display:block;" class="card">
+          <img class="card-img" src="https://i.ibb.co.com/0yXN0vDB/DSC-3494.jpg" alt="SD"/>
+          <div class="card-body">
+            <span class="card-grade">Sekolah Dasar · Kelas 1–6</span>
+            <h3>SD Pah Tsung</h3>
+            <p>Siswa membangun kompetensi akademik yang kuat dalam tiga bahasa. Dengan Kurikulum Merdeka, mereka belajar berpikir kritis, berkolaborasi, dan mengembangkan karakter yang disiplin dan toleran sejak dini.</p>
+            <span class="card-link">
+              Pelajari
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        <a href="jenjang-pendidikan.html#smp" style="text-decoration:none;color:inherit;display:block;" class="card">
+          <img class="card-img" src="https://i.ibb.co.com/C3DWH8dr/L1370753.jpg" alt="SMP"/>
+          <div class="card-body">
+            <span class="card-grade">Sekolah Menengah Pertama · Kelas 7–9</span>
+            <h3>SMP Pah Tsung</h3>
+            <p>Kemampuan Mandarin semakin diasah bersama guru native speaker. Siswa mengembangkan kemandirian, kepercayaan diri, dan kemampuan komunikasi multilingual yang membuka peluang lebih luas di masa depan.</p>
+            <span class="card-link">
+              Pelajari
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        <a href="jenjang-pendidikan.html#sma" style="text-decoration:none;color:inherit;display:block;" class="card">
+          <img class="card-img" src="https://i.ibb.co.com/q3zrP7GW/DSCF5296.jpg" alt="SMA"/>
+          <div class="card-body">
+            <span class="card-grade">Sekolah Menengah Atas · Kelas 10–12</span>
+            <h3>SMA Pah Tsung</h3>
+            <p>Lulusan SMA Pah Tsung siap melanjutkan studi ke universitas terbaik di Indonesia maupun Tiongkok. Dengan penguasaan bahasa Mandarin yang fasih dan karakter yang kuat, mereka kompetitif di kancah global.</p>
+            <span class="card-link">
+              Pelajari
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPUS -->
+  <section class="section campus" id="kampus">
+    <div class="section-inner">
+      <span class="section-eyebrow">Satu Lokasi, Semua Jenjang</span>
+      <div class="gold-divider"></div>
+      <h2 class="section-title">Fasilitas Sekolah</h2>
+      <p class="section-body" style="max-width:600px">
+        Terletak di Kompleks City Park, Cengkareng, Jakarta Barat. Pah Tsung School menghadirkan lingkungan belajar yang lengkap, nyaman, dan kondusif untuk semua jenjang dalam satu kawasan terpadu.
+      </p>
+      <div class="campus-grid">
+        <a href="fasilitas.html#gedung" style="text-decoration:none;color:inherit;display:block;" class="campus-card">
+          <img src="https://i.ibb.co.com/rGyBYwjS/IMG-2774-JPG.jpg" alt="Kampus Tangerang"/>
+          <div class="campus-card-body">
+            <h4>Gedung Sekolah</h4>
+            <p>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+              Kompleks City Park Blok A4, Cengkareng
+            </p>
+          </div>
+        </a>
+        <a href="fasilitas.html#waterplay" style="text-decoration:none;color:inherit;display:block;" class="campus-card">
+          <img src="https://i.ibb.co.com/jv9GKYKn/DSCF9704-1.jpg" alt="Kampus Jakarta"/>
+          <div class="campus-card-body">
+            <h4>Water Play</h4>
+            <p>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+              Kompleks City Park, Cengkareng Timur
+            </p>
+          </div>
+        </a>
+        <a href="fasilitas.html#sport" style="text-decoration:none;color:inherit;display:block;" class="campus-card">
+          <img src="https://i.ibb.co.com/99FSjN1J/DJI-0127-1.jpg" alt="Kampus Bekasi"/>
+          <div class="campus-card-body">
+            <h4>Semi Indoor Sport Field</h4>
+            <p>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+              Cengkareng Timur, Jakarta Barat
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONI -->
+  <section class="section testimoni" id="testimoni">
+    <div class="section-inner">
+      <span class="section-eyebrow">Apa Kata Mereka</span>
+      <div class="gold-divider"></div>
+      <h2 class="section-title">Testimoni Orang Tua & Alumni</h2>
+      <p class="section-body" style="max-width:580px">
+        Kepercayaan orang tua dan kebanggaan alumni adalah motivasi terbesar kami untuk terus berkembang.
+      </p>
+      <div class="testimoni-grid">
+        <div class="testimoni-card">
+          <div class="testimoni-video">
+            <iframe src="https://www.youtube.com/embed/5zWNZSX-ZiA?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="testimoni-caption">
+            <span class="testimoni-tag">Wali Murid SD</span>
+            <h4>Pengalaman Belajar Trilingual</h4>
+            <p>My child comes home happy, speaks Mandarin confidently, and is thriving academically. Pah Tsung School made all the difference.</p>
+          </div>
+        </div>
+        <div class="testimoni-card">
+          <div class="testimoni-video">
+            <iframe src="https://www.youtube.com/embed/QbkKy8vnR7A?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="testimoni-caption">
+            <span class="testimoni-tag">Wali Murid TK</span>
+            <h4>Perkembangan Karakter Anak</h4>
+            <p>Testimoni dari Mom Kartini, Mommy from Jayden Kennedy Wong (K2).</p>
+          </div>
+        </div>
+        <div class="testimoni-card">
+          <div class="testimoni-video">
+            <iframe src="https://www.youtube.com/embed/CbFzvtdPU7c?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="testimoni-caption">
+            <span class="testimoni-tag">Alumni SMA</span>
+            <h4>Siap Bersaing di Dunia Global</h4>
+            <p>An alumni testimony that reflects our commitment to academic excellence and character building. Proud of our graduates and the impact they continue to make.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KESEHARIAN -->
+  <section class="section keseharian" id="keseharian">
+    <div class="section-inner">
+      <span class="section-eyebrow">Kehidupan di Pah Tsung</span>
+      <div class="gold-divider"></div>
+      <h2 class="section-title">Keseharian Kami</h2>
+      <p class="section-body" style="max-width:580px">
+        Intip momen-momen berharga sehari-hari di Pah Tsung School. Dari kegiatan belajar, ekstrakurikuler, hingga perayaan budaya yang penuh warna.
+      </p>
+      <div class="keseharian-widget">
+        <behold-widget feed-id="sdCODvB84gOD4YhyFzDX"></behold-widget>
+        <script>
+          (() => {
+            const d=document,s=d.createElement("script");s.type="module";
+            s.src="https://w.behold.so/widget.js";d.head.append(s);
+          })();
+        </script>
+      </div>
+      <div class="keseharian-footer">
+        <a href="https://www.instagram.com/pahtsung.school" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+          Lihat Selengkapnya di Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner" id="pendaftaran">
+    <h2>Bergabunglah Bersama<br><span>Pah Tsung School</span></h2>
+    <p>Daftarkan putra-putri Anda sekarang dan berikan mereka bekal terbaik dengan fasih tiga bahasa, berkarakter, dan siap bersaing di dunia global.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="pendaftaran.html" class="btn-primary">Daftar Sekarang</a>
+      <a href="#" class="btn-outline">Informasi Pendaftaran</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="nav-logo-icon">
+  <img src="https://i.ibb.co.com/4RHG5y0Y/logo-pah-tsung-lingkaran.png" style="width:28px;height:28px;object-fit:contain;" />
+</div>
+          <span class="footer-logo-text">Pah Tsung School</span>
+        </div>
+        <p class="footer-desc">Sekolah trilingual terkemuka di Jakarta Barat — membentuk generasi yang fasih tiga bahasa, bermoral, berkarakter, dan siap bersaing di era globalisasi.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Sekolah</h5>
+        <ul>
+          <li><a href="#">Tentang Pah Tsung School</a></li>
+          <li><a href="#">Visi & Misi</a></li>
+          <li><a href="#">Yayasan Panca Cemerlang</a></li>
+          <li><a href="#">Akreditasi A</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Program</h5>
+        <ul>
+          <li><a href="#">Taman Kanak-Kanak</a></li>
+          <li><a href="#">Sekolah Dasar</a></li>
+          <li><a href="#">SMP</a></li>
+          <li><a href="#">SMA</a></li>
+          <li><a href="#">Program Trilingual</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Info</h5>
+        <ul>
+          <li><a href="#">Pendaftaran</a></li>
+          <li><a href="#">Ekstrakurikuler</a></li>
+          <li><a href="#">Karier</a></li>
+          <li><a href="#"><span class="__cf_email__" data-cfemail="563f3830391626373e22252338317825353e783f32">[Kontak]</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Pah Tsung School. Hak cipta dilindungi.</span>
+      <span>Kompleks City Park Blok A4, Cengkareng, Jakarta Barat</span>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+    // Hamburger menu
+
+    function toggleCampusList() {
+      var list = document.getElementById('globe-campus-list');
+      var arrow = document.getElementById('globe-btn-arrow');
+      var btn = document.querySelector('.globe-more-btn');
+      if (list.classList.contains('show')) {
+        list.classList.remove('show');
+        arrow.style.transform = 'rotate(0deg)';
+        btn.childNodes[0].textContent = 'Tempat Kami Melanjutkan Pendidikan ';
+      } else {
+        list.classList.add('show');
+        arrow.style.transform = 'rotate(90deg)';
+        btn.childNodes[0].textContent = 'Sembunyikan Daftar ';
+      }
+    }
+
+    function toggleMenu() {
+      const btn = document.getElementById('hamburger');
+      const menu = document.getElementById('mobileMenu');
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    }
+
+    function closeMenu() {
+      document.getElementById('hamburger').classList.remove('open');
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Tutup menu saat klik di luar
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('hamburger');
+      if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // Tutup menu saat resize ke desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 900) closeMenu();
+    });
+
+    // Navbar scroll effect
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Intersection Observer for stat counters
+    const statItems = document.querySelectorAll('.stat-item');
+    const statData = [
+      { target: 3, suffix: '', isText: false },
+      { target: null, text: 'A', isText: true },
+      { target: 4, suffix: '', isText: false },
+      { target: 17, suffix: '+', isText: false }
+    ];
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          statItems.forEach((item, i) => {
+            const numEl = item.querySelector('.stat-number');
+            const data = statData[i];
+            if (!numEl || numEl.dataset.animated) return;
+            numEl.dataset.animated = true;
+            if (data.isText) {
+              numEl.style.opacity = '0';
+              setTimeout(() => { numEl.style.transition = 'opacity 0.4s'; numEl.style.opacity = '1'; }, i * 120);
+            } else {
+              let count = 0;
+              const step = data.target / (1400 / 16);
+              const sup = numEl.querySelector('sup');
+              const interval = setInterval(() => {
+                count += step;
+                if (count >= data.target) { count = data.target; clearInterval(interval); }
+                if (sup) { numEl.childNodes[0].textContent = Math.round(count); }
+                else { numEl.textContent = Math.round(count) + data.suffix; }
+              }, 16);
+            }
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) observer.observe(statsBar);
+
+    // Fade in sections on scroll
+    const sections = document.querySelectorAll('.section, .stats-bar, .cta-banner');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          sectionObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    sections.forEach(s => {
+      s.style.opacity = '0';
+      s.style.transform = 'translateY(24px)';
+      s.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      sectionObserver.observe(s);
+    });
+  </script>
+
+  <!-- GLOBE SCRIPT -->
+  <script type="module">
+  import createGlobe from 'https://esm.sh/cobe@0.6.1';
+
+  const REGION_COLORS = {
+    asia:    '#60a5fa',
+    oceania: '#10b981',
+    eropa:   '#f59e0b',
+    amerika: '#ef4444',
+    timteng: '#a855f7',
+  };
+
+  const CAMPUSES = [
+    { name:"Zhejiang University 浙江大学",                    city:"Hangzhou, China",          lat:30.2589,  lng:120.1219,  region:"asia"    },
+    { name:"Wuhan University 武汉大学",                       city:"Wuhan, China",             lat:30.5355,  lng:114.3637,  region:"asia"    },
+    { name:"Beijing Institute of Technology 北京理工大学",    city:"Beijing, China",           lat:39.9534,  lng:116.3199,  region:"asia"    },
+    { name:"Chinese Culture University",                      city:"Taipei, Taiwan",           lat:25.0929,  lng:121.5694,  region:"asia"    },
+    { name:"South China Univ. of Technology 华南理工大学",    city:"Guangzhou, China",         lat:23.0490,  lng:113.4044,  region:"asia"    },
+    { name:"National Tsing Hua University 国立清华大学",      city:"Hsinchu, Taiwan",          lat:24.7961,  lng:120.9967,  region:"asia"    },
+    { name:"National Taiwan University 国立台湾大学",         city:"Taipei, Taiwan",           lat:25.0173,  lng:121.5397,  region:"asia"    },
+    { name:"China Medical University 中国医药大学",           city:"Taichung, Taiwan",         lat:24.1360,  lng:120.6741,  region:"asia"    },
+    { name:"National Cheng Chi University 国立政治大学",      city:"Taipei, Taiwan",           lat:24.9876,  lng:121.5773,  region:"asia"    },
+    { name:"Zhejiang Univ. of Sci. & Tech. 浙江科技大学",    city:"Hangzhou, China",          lat:30.3068,  lng:119.9548,  region:"asia"    },
+    { name:"Sichuan Univ. of Science & Engineering",          city:"Zigong, China",            lat:29.3513,  lng:104.7739,  region:"asia"    },
+    { name:"Jiangsu University 江苏大学",                     city:"Zhenjiang, China",         lat:32.2017,  lng:119.4538,  region:"asia"    },
+    { name:"Shenzhen University 深圳大学",                    city:"Shenzhen, China",          lat:22.5318,  lng:113.9340,  region:"asia"    },
+    { name:"Nanjing University 南京大学",                     city:"Nanjing, China",           lat:32.0613,  lng:118.7778,  region:"asia"    },
+    { name:"Xi'an Jiaotong-Liverpool University",             city:"Suzhou, China",            lat:31.2628,  lng:120.7347,  region:"asia"    },
+    { name:"Xiamen University Malaysia",                      city:"Sepang, Malaysia",         lat:2.8415,   lng:101.7056,  region:"asia"    },
+    { name:"Monash University",                               city:"Melbourne, Australia",     lat:-37.9105, lng:145.1363,  region:"oceania" },
+    { name:"Macquarie University",                            city:"Sydney, Australia",        lat:-33.7738, lng:151.1126,  region:"oceania" },
+    { name:"Universitas Indonesia",                           city:"Depok, Indonesia",         lat:-6.3615,  lng:106.8290,  region:"asia"    },
+    { name:"Institut Teknologi Bandung",                      city:"Bandung, Indonesia",       lat:-6.8915,  lng:107.6107,  region:"asia"    },
+  ];
+
+  const listEl = document.getElementById('globe-campus-list');
+  if (listEl) {
+    CAMPUSES.forEach(c => {
+      const col  = REGION_COLORS[c.region];
+      const card = document.createElement('div');
+      card.className = 'globe-campus-card';
+      card.innerHTML = '<div class="globe-campus-dot" style="background:'+col+';"></div><div><div class="globe-campus-name">'+c.name+'</div><div class="globe-campus-city">'+c.city+'</div></div>';
+      listEl.appendChild(card);
+    });
+  }
+
+  const wrap   = document.getElementById('globe-wrap');
+  const canvas = document.getElementById('globe-canvas');
+
+  if (wrap && canvas) {
+  const dpr    = Math.min(window.devicePixelRatio || 1, 2);
+
+  function setCanvasSize() {
+    const s = wrap.clientWidth;
+    canvas.width  = Math.round(s * dpr);
+    canvas.height = Math.round(s * dpr);
+  }
+  setCanvasSize();
+
+  let phi = 1.0, theta = 0.15;
+  let dragging = false, lx, ly;
+  let cphi = phi, ctheta = theta;
+
+  const globe = createGlobe(canvas, {
+    devicePixelRatio: dpr,
+    width:  canvas.width,
+    height: canvas.height,
+    phi, theta,
+    dark: 0.6,
+    diffuse: 1.8,
+    mapSamples: 22000,
+    mapBrightness: 8,
+    baseColor:   [0.05, 0.18, 0.45],
+    markerColor: [0.96, 0.77, 0.0],
+    glowColor:   [0.05, 0.18, 0.55],
+    markers: CAMPUSES.map(c => ({ location: [c.lat, c.lng], size: 0.065 })),
+    onRender(state) {
+      if (!dragging) phi += 0.0012;
+      state.phi   = phi;
+      state.theta = theta;
+      cphi   = phi;
+      ctheta = theta;
+    },
+  });
+
+  canvas.addEventListener('mousedown', e => { dragging = true; lx = e.clientX; ly = e.clientY; canvas.style.cursor = 'grabbing'; });
+  window.addEventListener('mouseup',   () => { dragging = false; canvas.style.cursor = 'grab'; });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    phi   += (e.clientX - lx) * 0.005;
+    theta  = Math.max(-0.55, Math.min(0.55, theta - (e.clientY - ly) * 0.003));
+    lx = e.clientX; ly = e.clientY;
+  });
+  canvas.addEventListener('touchstart', e => { dragging = true; lx = e.touches[0].clientX; ly = e.touches[0].clientY; }, { passive: true });
+  window.addEventListener('touchend',   () => { dragging = false; });
+  window.addEventListener('touchmove',  e => {
+    if (!dragging) return;
+    phi   += (e.touches[0].clientX - lx) * 0.005;
+    theta  = Math.max(-0.55, Math.min(0.55, theta - (e.touches[0].clientY - ly) * 0.003));
+    lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+  }, { passive: true });
+
+  // ── FUNGSI PROYEKSI TITIK KE KOORDINAT LAYAR ──
+  function project(lat, lng) {
+    const wr = wrap.getBoundingClientRect();
+    const la = lat * Math.PI / 180;
+    const lo = lng * Math.PI / 180;
+    const x3 =  Math.cos(la) * Math.sin(lo - cphi);
+    const y3 =  Math.sin(la) * Math.cos(ctheta) - Math.cos(la) * Math.cos(lo - cphi) * Math.sin(ctheta);
+    const z3 =  Math.sin(la) * Math.sin(ctheta) + Math.cos(la) * Math.cos(lo - cphi) * Math.cos(ctheta);
+    if (z3 < 0.08) return null;
+    return {
+      sx: (0.5 + x3 * 0.47) * wr.width,
+      sy: (0.5 - y3 * 0.47) * wr.height,
+      cx: wr.left + (0.5 + x3 * 0.47) * wr.width,
+      cy: wr.top  + (0.5 - y3 * 0.47) * wr.height,
+      z3,
+    };
+  }
+
+  // ── LABEL SVG MENGIKUTI TITIK ──
+  const svg = document.getElementById('globe-svg-overlay');
+  const MAX_LABELS = 3;
+  const CYCLE_MS   = 3500;  // seberapa sering 1 label diganti
+  const FADE_MS    = 500;
+
+  // Ukur lebar teks di SVG (aproksimasi karena SVG belum di-DOM sepenuhnya)
+  function measureText(text, fontSize, bold) {
+    const avgW = bold ? fontSize * 0.62 : fontSize * 0.55;
+    return text.length * avgW;
+  }
+
+  // Buat grup SVG per slot label
+  const slots = [];
+  for (let i = 0; i < MAX_LABELS; i++) {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.style.opacity = '0';
+    g.style.transition = 'opacity ' + FADE_MS + 'ms ease';
+
+    // garis dari titik ke kotak
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('stroke-width', '1');
+    line.setAttribute('stroke-linecap', 'round');
+
+    // dot kecil tepat di titik
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.setAttribute('r', '3');
+
+    // kotak background
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('rx', '7');
+    rect.setAttribute('fill', 'rgba(13,34,64,0.93)');
+    rect.setAttribute('stroke-width', '1');
+
+    // teks nama
+    const tName = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    tName.setAttribute('font-family', 'Outfit, sans-serif');
+    tName.setAttribute('font-size', '11');
+    tName.setAttribute('font-weight', '600');
+    tName.setAttribute('dominant-baseline', 'middle');
+
+    // teks kota
+    const tCity = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    tCity.setAttribute('font-family', 'DM Sans, sans-serif');
+    tCity.setAttribute('font-size', '10');
+    tCity.setAttribute('fill', 'rgba(255,255,255,0.5)');
+    tCity.setAttribute('dominant-baseline', 'middle');
+
+    g.appendChild(line);
+    g.appendChild(dot);
+    g.appendChild(rect);
+    g.appendChild(tName);
+    g.appendChild(tCity);
+    svg.appendChild(g);
+
+    slots.push({
+      g, line, dot, rect, tName, tCity,
+      campusIdx: -1,
+      visible: false,
+    });
+  }
+
+  let cycleSlot = 0;
+
+  function assignCampusToSlot(slot, campusIdx) {
+    const c = CAMPUSES[campusIdx];
+    const col = REGION_COLORS[c.region];
+    slot.campusIdx = campusIdx;
+    slot.tName.textContent = c.name;
+    slot.tName.setAttribute('fill', col);
+    slot.tCity.textContent = c.city;
+    slot.dot.setAttribute('fill', col);
+  }
+
+  function cycleLabelSlot() {
+    const slot = slots[cycleSlot];
+
+    // Pilih kampus: visible, tidak sedang dipakai slot lain
+    const usedIdxs = slots.map(s => s.campusIdx);
+    const candidates = CAMPUSES
+      .map((c, i) => ({ c, i, p: project(c.lat, c.lng) }))
+      .filter(x => x.p !== null && !usedIdxs.includes(x.i))
+      .sort((a, b) => b.p.z3 - a.p.z3);
+
+    if (candidates.length === 0) { cycleSlot = (cycleSlot + 1) % MAX_LABELS; return; }
+
+    // Ambil dari 6 terdepan secara acak
+    const pool = candidates.slice(0, 6);
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+
+    // Fade out → ganti konten → fade in
+    slot.g.style.opacity = '0';
+    slot.visible = false;
+    setTimeout(() => {
+      assignCampusToSlot(slot, pick.i);
+      slot.visible = true;
+      slot.g.style.opacity = '1';
+    }, FADE_MS + 50);
+
+    cycleSlot = (cycleSlot + 1) % MAX_LABELS;
+  }
+
+  // Init: isi semua slot dengan kampus berbeda lalu mulai interval
+  setTimeout(() => {
+    for (let i = 0; i < MAX_LABELS; i++) {
+      setTimeout(() => cycleLabelSlot(), i * 300);
+    }
+    setInterval(cycleLabelSlot, CYCLE_MS);
+  }, 600);
+
+  // ── LOOP UPDATE POSISI SVG SETIAP FRAME ──
+  const TEXT_OFFSET = 16;
+  const ROW_H = 32; // tinggi per label (nama + kota)
+
+  function updateSVGLabels() {
+    const wr = wrap.getBoundingClientRect();
+    const W = wr.width, H = wr.height;
+
+    // Kumpulkan posisi semua slot yang visible
+    const positions = [];
+
+    slots.forEach(slot => {
+      if (slot.campusIdx < 0) return;
+      const c = CAMPUSES[slot.campusIdx];
+      const p = project(c.lat, c.lng);
+
+      if (!p) {
+        if (slot.visible) {
+          slot.g.style.opacity = '0';
+          slot.visible = false;
+          setTimeout(() => { slot.campusIdx = -1; }, FADE_MS);
+        }
+        return;
+      }
+
+      if (!slot.visible) {
+        slot.g.style.opacity = '1';
+        slot.visible = true;
+      }
+
+      slot._px = p.sx;
+      slot._py = p.sy;
+      positions.push(slot);
+    });
+
+    // Sort by Y agar resolusi overlap lebih konsisten
+    positions.sort((a, b) => a._py - b._py);
+
+    // Anti-overlap: geser Y jika terlalu dekat
+    for (let i = 1; i < positions.length; i++) {
+      const prev = positions[i - 1];
+      const curr = positions[i];
+      const minDist = ROW_H + 4;
+      if (curr._py - prev._targetY < minDist) {
+        curr._py = prev._targetY + minDist;
+      }
+    }
+
+    positions.forEach(slot => {
+      const px = slot._px;
+      const py = slot._py;
+
+      // Clamp vertikal
+      const clampY = Math.max(14, Math.min(H - 24, py));
+      slot._targetY = clampY;
+
+      // Sisi kiri/kanan
+      const nameW = measureText(slot.tName.textContent, 12, true);
+      const goRight = (px + TEXT_OFFSET + nameW + 8) <= W;
+      const tx = goRight ? px + TEXT_OFFSET : px - TEXT_OFFSET;
+      const anchor = goRight ? 'start' : 'end';
+
+      // Dot tetap di posisi asli titik globe
+      slot.dot.setAttribute('cx', slot._px);
+      slot.dot.setAttribute('cy', slot._py);
+
+      slot.tName.setAttribute('x', tx);
+      slot.tName.setAttribute('y', clampY - 7);
+      slot.tName.setAttribute('text-anchor', anchor);
+
+      slot.tCity.setAttribute('x', tx);
+      slot.tCity.setAttribute('y', clampY + 7);
+      slot.tCity.setAttribute('text-anchor', anchor);
+    });
+
+    requestAnimationFrame(updateSVGLabels);
+  }
+  updateSVGLabels();
+
+  // ── HOVER TOOLTIP ──
+  const tip    = document.getElementById('globe-tooltip');
+  const ttName = document.getElementById('tt-name');
+  const ttCity = document.getElementById('tt-city');
+
+  canvas.addEventListener('mousemove', e => {
+    let best = null, bd = 24;
+    CAMPUSES.forEach(c => {
+      const p = project(c.lat, c.lng);
+      if (!p) return;
+      const d = Math.hypot(p.cx - e.clientX, p.cy - e.clientY);
+      if (d < bd) { bd = d; best = { c, p }; }
+    });
+    if (best) {
+      const col = REGION_COLORS[best.c.region];
+      ttName.innerHTML = '<span class="tt-dot" style="background:'+col+';"></span>'+best.c.name;
+      ttCity.textContent = best.c.city;
+      tip.style.display = 'block';
+      const wr2 = wrap.getBoundingClientRect();
+      const tw = tip.offsetWidth  || 220;
+      const th = tip.offsetHeight || 50;
+      let tx = best.p.sx + 14;
+      let ty = best.p.sy - th / 2;
+      if (tx + tw > wr2.width)  tx = best.p.sx - tw - 14;
+      if (ty < 0)               ty = 4;
+      if (ty + th > wr2.height) ty = wr2.height - th - 4;
+      tip.style.left = tx + 'px';
+      tip.style.top  = ty + 'px';
+    } else {
+      tip.style.display = 'none';
+    }
+  });
+  canvas.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+  } // end if (wrap && canvas)
+  </script>
+
+</body>
+</html>
