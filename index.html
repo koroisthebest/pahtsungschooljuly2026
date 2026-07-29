@@ -66,14 +66,6 @@
       font-size: 18px;
     }
 
-    .nav-logo-text {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--navy);
-      letter-spacing: -0.5px;
-    }
-
     .nav-links {
       display: flex;
       gap: 32px;
@@ -292,8 +284,6 @@
       gap: 40px;
       text-align: center;
     }
-
-    .stat-item {}
 
     .stat-number {
       font-family: var(--font-display);
@@ -593,8 +583,6 @@
       padding-bottom: 48px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-
-    .footer-brand {}
 
     .footer-logo {
       display: flex;
@@ -923,7 +911,6 @@
       position: relative;
       z-index: 1;
     }
-    .globe-left {}
     .globe-eyebrow {
       font-size: 11px;
       font-weight: 600;
@@ -1152,38 +1139,6 @@
     }
 
   </style>
-  <script>
-
-    function toggleCampusList() {
-      var list = document.getElementById('globe-campus-list');
-      var arrow = document.getElementById('globe-btn-arrow');
-      var btn = document.querySelector('.globe-more-btn');
-      if (list.classList.contains('show')) {
-        list.classList.remove('show');
-        arrow.style.transform = 'rotate(0deg)';
-        btn.childNodes[0].textContent = 'Tempat Kami Melanjutkan Pendidikan ';
-      } else {
-        list.classList.add('show');
-        arrow.style.transform = 'rotate(90deg)';
-        btn.childNodes[0].textContent = 'Sembunyikan Daftar ';
-      }
-    }
-
-    function toggleMenu() {
-      var btn = document.getElementById('hamburger');
-      var menu = document.getElementById('mobileMenu');
-      btn.classList.toggle('open');
-      menu.classList.toggle('open');
-      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-    }
-    function closeMenu() {
-      var btn = document.getElementById('hamburger');
-      var menu = document.getElementById('mobileMenu');
-      if (btn) btn.classList.remove('open');
-      if (menu) menu.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  </script>
 </head>
 <body>
 
@@ -1201,7 +1156,7 @@
       <li><a href="#pendaftaran">Pendaftaran</a></li>
     </ul>
     <div class="nav-right">
-      <a href="#kontak" class="btn-cta"><span class="__cf_email__" data-cfemail="462f2820290636272e32353328216835252e682f22">[Kontak]</span></a>
+      <a href="mailto:info@pahtsung.sch.id" class="btn-cta">Hubungi Kami</a>
     </div>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -1606,7 +1561,7 @@
           <li><a href="#">Pendaftaran</a></li>
           <li><a href="#">Ekstrakurikuler</a></li>
           <li><a href="#">Karier</a></li>
-          <li><a href="#"><span class="__cf_email__" data-cfemail="563f3830391626373e22252338317825353e783f32">[Kontak]</span></a></li>
+          <li><a href="mailto:info@pahtsung.sch.id">info@pahtsung.sch.id</a></li>
         </ul>
       </div>
     </div>
@@ -1616,7 +1571,7 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
 
     // Hamburger menu
 
