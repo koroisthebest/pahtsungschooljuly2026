@@ -1452,7 +1452,7 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
           </svg>
-          Drag untuk memutar &nbsp;·&nbsp; Hover titik untuk detail
+          Drag untuk memutar &nbsp;·&nbsp; Hover titik untuk detail &nbsp;·&nbsp; Garis menunjukkan jalur alumni dari Jakarta
         </p>
       </div>
     </div>
@@ -1897,6 +1897,9 @@
     { name:"Institut Teknologi Bandung",                      city:"Bandung, Indonesia",       lat:-6.8915,  lng:107.6107,  region:"asia"    },
   ];
 
+  // Titik asal alumni: Jakarta Barat (lokasi Pah Tsung School)
+  const ORIGIN = { name: "Pah Tsung School", city: "Jakarta Barat, Indonesia", lat: -6.1655, lng: 106.7826 };
+
   const listEl = document.getElementById('globe-campus-list');
   if (listEl) {
     CAMPUSES.forEach(c => {
@@ -1937,7 +1940,10 @@
     baseColor:   [0.05, 0.18, 0.45],
     markerColor: [0.96, 0.77, 0.0],
     glowColor:   [0.05, 0.18, 0.55],
-    markers: CAMPUSES.map(c => ({ location: [c.lat, c.lng], size: 0.065 })),
+    markers: [
+      { location: [ORIGIN.lat, ORIGIN.lng], size: 0.1 },
+      ...CAMPUSES.map(c => ({ location: [c.lat, c.lng], size: 0.065 })),
+    ],
     onRender(state) {
       if (!dragging) phi += 0.0012;
       state.phi   = phi;
@@ -1982,8 +1988,39 @@
     };
   }
 
-  // ── LABEL SVG MENGIKUTI TITIK ──
+  // ── GARIS RUTE ANIMASI: Jakarta → tiap kampus tujuan ──
   const svg = document.getElementById('globe-svg-overlay');
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const arcsGroup = document.createElementNS(SVGNS, 'g');
+  arcsGroup.setAttribute('id', 'globe-arcs');
+  svg.appendChild(arcsGroup);
+
+  const ARCS = CAMPUSES.map((c, i) => {
+    const col = REGION_COLORS[c.region];
+
+    const path = document.createElementNS(SVGNS, 'path');
+    path.setAttribute('id', 'arc-' + i);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', col);
+    path.setAttribute('stroke-width', '1.1');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-dasharray', '5 6');
+    path.setAttribute('opacity', '0.45');
+    path.style.transition = 'opacity 0.3s ease';
+
+    // titik kecil yang bergerak dari asal ke tujuan, mengikuti path
+    const dot = document.createElementNS(SVGNS, 'circle');
+    dot.setAttribute('r', '2.4');
+    dot.setAttribute('fill', col);
+    dot.style.filter = 'drop-shadow(0 0 3px ' + col + ')';
+
+    arcsGroup.appendChild(path);
+    arcsGroup.appendChild(dot);
+
+    return { path, dot, campus: c, color: col, visible: false, t: Math.random() };
+  });
+
+  // ── LABEL SVG MENGIKUTI TITIK ──
   const MAX_LABELS = 3;
   const CYCLE_MS   = 3500;  // seberapa sering 1 label diganti
   const FADE_MS    = 500;
@@ -2096,9 +2133,57 @@
   const TEXT_OFFSET = 16;
   const ROW_H = 32; // tinggi per label (nama + kota)
 
+  function updateArcs(wr) {
+    const cx0 = wr.width / 2, cy0 = wr.height / 2;
+    const po = project(ORIGIN.lat, ORIGIN.lng);
+
+    ARCS.forEach(arc => {
+      const pd = project(arc.campus.lat, arc.campus.lng);
+      const ok = po && pd;
+
+      if (!ok) {
+        if (arc.visible) {
+          arc.path.setAttribute('opacity', '0');
+          arc.dot.setAttribute('opacity', '0');
+          arc.visible = false;
+        }
+        return;
+      }
+
+      // Lengkungkan garis menjauhi pusat globe (efek jalur penerbangan)
+      const mx = (po.sx + pd.sx) / 2;
+      const my = (po.sy + pd.sy) / 2;
+      const dx = mx - cx0, dy = my - cy0;
+      const dist = Math.hypot(dx, dy) || 1;
+      const chordLen = Math.hypot(pd.sx - po.sx, pd.sy - po.sy);
+      const bulge = Math.min(chordLen * 0.32, 55);
+      const ctrlX = mx + (dx / dist) * bulge;
+      const ctrlY = my + (dy / dist) * bulge;
+
+      const d = 'M' + po.sx + ',' + po.sy + ' Q' + ctrlX + ',' + ctrlY + ' ' + pd.sx + ',' + pd.sy;
+      arc.path.setAttribute('d', d);
+
+      if (!arc.visible) {
+        arc.path.setAttribute('opacity', '0.45');
+        arc.dot.setAttribute('opacity', '1');
+        arc.visible = true;
+      }
+
+      // Gerakkan titik kecil di sepanjang garis dari asal ke tujuan
+      arc.t += 0.0028;
+      if (arc.t > 1) arc.t -= 1;
+      const len = arc.path.getTotalLength();
+      const pt = arc.path.getPointAtLength(arc.t * len);
+      arc.dot.setAttribute('cx', pt.x);
+      arc.dot.setAttribute('cy', pt.y);
+    });
+  }
+
   function updateSVGLabels() {
     const wr = wrap.getBoundingClientRect();
     const W = wr.width, H = wr.height;
+
+    updateArcs(wr);
 
     // Kumpulkan posisi semua slot yang visible
     const positions = [];
@@ -2177,13 +2262,22 @@
   const ttCity = document.getElementById('tt-city');
 
   canvas.addEventListener('mousemove', e => {
-    let best = null, bd = 24;
-    CAMPUSES.forEach(c => {
+    let best = null, bd = 24, bestIdx = -1;
+    CAMPUSES.forEach((c, i) => {
       const p = project(c.lat, c.lng);
       if (!p) return;
       const d = Math.hypot(p.cx - e.clientX, p.cy - e.clientY);
-      if (d < bd) { bd = d; best = { c, p }; }
+      if (d < bd) { bd = d; best = { c, p }; bestIdx = i; }
     });
+
+    // Redupkan semua garis, terangkan garis kampus yang sedang di-hover
+    ARCS.forEach((arc, i) => {
+      if (!arc.visible) return;
+      const active = i === bestIdx;
+      arc.path.setAttribute('opacity', active ? '0.9' : '0.25');
+      arc.path.setAttribute('stroke-width', active ? '1.8' : '1.1');
+    });
+
     if (best) {
       const col = REGION_COLORS[best.c.region];
       ttName.innerHTML = '<span class="tt-dot" style="background:'+col+';"></span>'+best.c.name;
@@ -2203,7 +2297,14 @@
       tip.style.display = 'none';
     }
   });
-  canvas.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+  canvas.addEventListener('mouseleave', () => {
+    tip.style.display = 'none';
+    ARCS.forEach(arc => {
+      if (!arc.visible) return;
+      arc.path.setAttribute('opacity', '0.45');
+      arc.path.setAttribute('stroke-width', '1.1');
+    });
+  });
   } // end if (wrap && canvas)
   </script>
 
