@@ -162,14 +162,15 @@
 
     .hero-eyebrow {
       display: inline-block;
-      font-size: 12px;
+      font-size: clamp(8px, 2.1vw, 11px);
       font-weight: 600;
-      letter-spacing: 3px;
+      letter-spacing: 1px;
+      white-space: nowrap;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 20px;
       border: 1px solid rgba(245,196,0,0.4);
-      padding: 6px 16px;
+      padding: 6px 14px;
       border-radius: 20px;
     }
 
@@ -269,6 +270,122 @@
     }
 
     .hero-scroll svg { opacity: 0.4; }
+
+    /* ── HERO SPLIT (grid foto) ── */
+    .hero-split {
+      padding-top: 72px;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 45% 55%;
+      background: var(--navy);
+      position: relative;
+    }
+
+    .hero-left {
+      background: var(--navy);
+      padding: 60px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .hero-left h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4.5vw, 58px);
+      color: var(--white);
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .hero-left h1 span { color: var(--gold); }
+
+    .hero-left p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 32px;
+      line-height: 1.6;
+      font-weight: 300;
+      max-width: 480px;
+    }
+
+    .hero-right-container {
+      position: relative;
+      background-color: var(--navy);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .grid-board {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 6px;
+      width: 100%;
+      height: 100%;
+      max-height: 620px;
+    }
+
+    .tile {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .tile-flipper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+
+    .tile-flipper.flipped { transform: rotateY(180deg); }
+
+    .tile-front, .tile-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 8px;
+    }
+
+    .tile-front {
+      background-image: url('https://i.ibb.co.com/67ZNVhs6/foto-sekolah-drone-new-web.jpg');
+      background-size: 500% 500%;
+    }
+
+    .tile-back {
+      transform: rotateY(180deg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-split { grid-template-columns: 1fr; }
+      .hero-right-container { min-height: 480px; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-left { padding: 48px 28px; text-align: left; }
+      .hero-eyebrow, .hero-chinese, .hero-left h1, .hero-left p { text-align: left; }
+      .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        max-width: 280px;
+      }
+      .hero-buttons .btn-primary,
+      .hero-buttons .btn-outline {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+    }
 
     /* ── STATS ── */
     .stats-bar {
@@ -786,7 +903,7 @@
     @media (max-width: 600px) {
       .stats-inner { grid-template-columns: 1fr 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
-      .hero-buttons { flex-direction: column; align-items: center; }
+      .hero-buttons { flex-direction: column; align-items: stretch; max-width: 280px; }
       .cta-banner { padding: 60px 24px; }
       footer { padding: 48px 24px 24px; }
     }
@@ -1179,11 +1296,8 @@
   </div>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-pattern"></div>
-    <div class="hero-img-overlay"></div>
-    <div class="hero-content">
+  <section class="hero-split">
+    <div class="hero-left">
       <span class="hero-eyebrow">三语学校 - Trilingual School - Sekolah Tiga Bahasa</span>
       <div class="hero-chinese"><span class="cn-white">全球视野</span> <span class="cn-gold">精通三种语言</span></div>
       <h1>Think Global<br><span>Speak Trilingual</span></h1>
@@ -1193,13 +1307,77 @@
         <a href="#tentang" class="btn-outline">Tentang Pah Tsung School</a>
       </div>
     </div>
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
+
+    <div class="hero-right-container">
+      <div class="grid-board" id="gridBoard"></div>
     </div>
   </section>
+
+  <!-- HERO GRID SCRIPT -->
+  <script>
+    (function () {
+      const PHOTO_POOL = [
+        'https://i.ibb.co.com/m5D3vXY5/foto-aset-web-siswa-pah-tsung.png',
+        'https://i.ibb.co.com/0yXN0vDB/DSC-3494.jpg',
+        'https://i.ibb.co.com/C3DWH8dr/L1370753.jpg',
+        'https://i.ibb.co.com/q3zrP7GW/DSCF5296.jpg',
+        'https://i.ibb.co.com/jv9GKYKn/DSCF9704-1.jpg',
+        'https://i.ibb.co.com/99FSjN1J/DJI-0127-1.jpg',
+        'https://i.ibb.co.com/fz1f8ygx/TK-banner-web.jpg'
+      ];
+
+      const COLS = 5;
+      const ROWS = 5;
+      const board = document.getElementById('gridBoard');
+      const photoTiles = [];
+
+      function flipTile(targetObj) {
+        if (!targetObj.isFlipped) {
+          const randomPhoto = PHOTO_POOL[Math.floor(Math.random() * PHOTO_POOL.length)];
+          targetObj.back.style.backgroundImage = `url('${randomPhoto}')`;
+          targetObj.flipper.classList.add('flipped');
+          targetObj.isFlipped = true;
+        } else {
+          targetObj.flipper.classList.remove('flipped');
+          targetObj.isFlipped = false;
+        }
+      }
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const tile = document.createElement('div');
+          tile.classList.add('tile');
+
+          const flipper = document.createElement('div');
+          flipper.className = 'tile-flipper';
+
+          const front = document.createElement('div');
+          front.className = 'tile-front';
+          front.style.backgroundPosition = `${(c / (COLS - 1)) * 100}% ${(r / (ROWS - 1)) * 100}%`;
+
+          const back = document.createElement('div');
+          back.className = 'tile-back';
+
+          flipper.appendChild(front);
+          flipper.appendChild(back);
+          tile.appendChild(flipper);
+
+          const tileObj = { flipper, back, isFlipped: false, element: tile };
+          photoTiles.push(tileObj);
+
+          tile.addEventListener('mouseenter', () => flipTile(tileObj));
+
+          board.appendChild(tile);
+        }
+      }
+
+      setInterval(() => {
+        if (photoTiles.length === 0) return;
+        const randomIdx = Math.floor(Math.random() * photoTiles.length);
+        flipTile(photoTiles[randomIdx]);
+      }, 3060);
+    })();
+  </script>
 
   <!-- STATS -->
   <section class="stats-bar">
