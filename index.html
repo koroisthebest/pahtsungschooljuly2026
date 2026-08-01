@@ -114,6 +114,80 @@
 
     .btn-cta:hover { background: var(--gold); transform: translateY(-1px); }
 
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-switcher {
+      position: relative;
+    }
+    .lang-current {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      border: 1px solid rgba(13,34,64,0.15);
+      padding: 7px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .lang-current:hover { border-color: var(--gold); background: rgba(245,196,0,0.08); }
+    .lang-current img { width: 18px; height: 13px; object-fit: cover; border-radius: 2px; display: block; }
+    .lang-current span {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.3px;
+    }
+    .lang-current svg { width: 10px; height: 10px; color: var(--navy); transition: transform 0.2s; flex-shrink: 0; }
+    .lang-switcher.open .lang-current svg { transform: rotate(180deg); }
+
+    .lang-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--white);
+      border: 1px solid rgba(13,34,64,0.1);
+      border-radius: 8px;
+      box-shadow: 0 12px 32px rgba(13,34,64,0.14);
+      min-width: 168px;
+      padding: 6px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+      z-index: 200;
+    }
+    .lang-switcher.open .lang-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 9px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+      text-align: left;
+      transition: background 0.15s;
+    }
+    .lang-option:hover { background: var(--off-white); }
+    .lang-option.active { background: rgba(245,196,0,0.12); color: var(--navy); font-weight: 600; }
+    .lang-option img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; flex-shrink: 0; }
+
+    @media (max-width: 480px) {
+      .lang-current span { display: none; }
+      .lang-current { padding: 7px 8px; }
+    }
+
     /* ── HERO ── */
     .hero {
       position: relative;
@@ -1269,15 +1343,33 @@
   <img src="https://i.ibb.co.com/1fMy5VXb/logo-Pah-Tsung-text-biru-utk-video.png" style="height:44px;object-fit:contain;" alt="Logo" />
 </a>
     <ul class="nav-links">
-      <li><a href="#tentang">Tentang</a></li>
-      <li><a href="#pembelajaran">Jenjang Pendidikan</a></li>
-      <li><a href="#kampus">Fasilitas</a></li>
-      <li><a href="#testimoni">Testimoni</a></li>
-      <li><a href="#keseharian">Keseharian</a></li>
-      <li><a href="#pendaftaran">Pendaftaran</a></li>
+      <li><a href="#tentang" data-i18n="nav_tentang">Tentang</a></li>
+      <li><a href="#pembelajaran" data-i18n="nav_jenjang">Jenjang Pendidikan</a></li>
+      <li><a href="#kampus" data-i18n="nav_fasilitas">Fasilitas</a></li>
+      <li><a href="#testimoni" data-i18n="nav_testimoni">Testimoni</a></li>
+      <li><a href="#keseharian" data-i18n="nav_keseharian">Keseharian</a></li>
+      <li><a href="#pendaftaran" data-i18n="nav_pendaftaran">Pendaftaran</a></li>
     </ul>
     <div class="nav-right">
-      <a href="mailto:info@pahtsung.sch.id" class="btn-cta">Hubungi Kami</a>
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-current" id="langCurrentBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Pilih Bahasa / Select Language / 选择语言">
+          <img id="langCurrentFlag" src="https://flagcdn.com/w40/id.png" alt="">
+          <span id="langCurrentCode">ID</span>
+          <svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-dropdown" id="langDropdown" role="menu">
+          <button class="lang-option" type="button" data-lang="id" role="menuitem">
+            <img src="https://flagcdn.com/w40/id.png" alt="Indonesia"> Bahasa Indonesia
+          </button>
+          <button class="lang-option" type="button" data-lang="en" role="menuitem">
+            <img src="https://flagcdn.com/w40/gb.png" alt="English"> English
+          </button>
+          <button class="lang-option" type="button" data-lang="zh" role="menuitem">
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文"> 中文
+          </button>
+        </div>
+      </div>
+      <a href="mailto:info@pahtsung.sch.id" class="btn-cta" data-i18n="nav_cta">Hubungi Kami</a>
     </div>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -1287,28 +1379,28 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="#tentang" onclick="closeMenu()">Tentang</a></li>
-      <li><a href="#pembelajaran" onclick="closeMenu()">Jenjang Pendidikan</a></li>
-      <li><a href="#kampus" onclick="closeMenu()">Fasilitas</a></li>
-      <li><a href="#testimoni" onclick="closeMenu()">Testimoni</a></li>
-      <li><a href="#keseharian" onclick="closeMenu()">Keseharian</a></li>
-      <li><a href="#pendaftaran" onclick="closeMenu()">Pendaftaran</a></li>
+      <li><a href="#tentang" onclick="closeMenu()" data-i18n="nav_tentang">Tentang</a></li>
+      <li><a href="#pembelajaran" onclick="closeMenu()" data-i18n="nav_jenjang">Jenjang Pendidikan</a></li>
+      <li><a href="#kampus" onclick="closeMenu()" data-i18n="nav_fasilitas">Fasilitas</a></li>
+      <li><a href="#testimoni" onclick="closeMenu()" data-i18n="nav_testimoni">Testimoni</a></li>
+      <li><a href="#keseharian" onclick="closeMenu()" data-i18n="nav_keseharian">Keseharian</a></li>
+      <li><a href="#pendaftaran" onclick="closeMenu()" data-i18n="nav_pendaftaran">Pendaftaran</a></li>
     </ul>
     <div class="mobile-menu-cta">
-      <a href="#kontak" onclick="closeMenu()">Hubungi Kami</a>
+      <a href="#kontak" onclick="closeMenu()" data-i18n="nav_cta">Hubungi Kami</a>
     </div>
   </div>
 
   <!-- HERO -->
   <section class="hero-split">
     <div class="hero-left">
-      <span class="hero-eyebrow">三语学校 - Trilingual School - Sekolah Tiga Bahasa</span>
+      <span class="hero-eyebrow" data-i18n="hero_eyebrow">三语学校 - Trilingual School - Sekolah Tiga Bahasa</span>
       <div class="hero-chinese"><span class="cn-white">全球视野</span> <span class="cn-gold">精通三种语言</span></div>
-      <h1>Think Global<br><span>Speak Trilingual</span></h1>
-      <p>Pah Tsung School with an integrated curriculum that empowers students to excel in Mandarin, English, and Bahasa Indonesia with confidence and purpose.</p>
+      <h1 data-i18n-html="hero_title">Think Global<br><span>Speak Trilingual</span></h1>
+      <p data-i18n="hero_desc">Pah Tsung School with an integrated curriculum that empowers students to excel in Mandarin, English, and Bahasa Indonesia with confidence and purpose.</p>
       <div class="hero-buttons">
-        <a href="#pembelajaran" class="btn-primary">Jelajahi Program</a>
-        <a href="#tentang" class="btn-outline">Tentang Pah Tsung School</a>
+        <a href="#pembelajaran" class="btn-primary" data-i18n="hero_btn_primary">Jelajahi Program</a>
+        <a href="#tentang" class="btn-outline" data-i18n="hero_btn_outline">Tentang Pah Tsung School</a>
       </div>
     </div>
 
@@ -1388,19 +1480,19 @@
     <div class="stats-inner">
       <div class="stat-item">
         <div class="stat-number">3</div>
-        <div class="stat-label">Bahasa pengantar: Mandarin, Inggris, dan Bahasa Indonesia</div>
+        <div class="stat-label" data-i18n="stat_1">Bahasa pengantar: Mandarin, Inggris, dan Bahasa Indonesia</div>
       </div>
       <div class="stat-item">
         <div class="stat-number">A</div>
-        <div class="stat-label">Akreditasi A BAN-S/M — standar pendidikan terbaik nasional</div>
+        <div class="stat-label" data-i18n="stat_2">Akreditasi A BAN-S/M — standar pendidikan terbaik nasional</div>
       </div>
       <div class="stat-item">
         <div class="stat-number">4</div>
-        <div class="stat-label">Jenjang pendidikan: TK, SD, SMP, dan SMA dalam satu kompleks</div>
+        <div class="stat-label" data-i18n="stat_3">Jenjang pendidikan: TK, SD, SMP, dan SMA dalam satu kompleks</div>
       </div>
       <div class="stat-item">
         <div class="stat-number">17<sup>+</sup></div>
-        <div class="stat-label">Guru profesional berpengalaman, termasuk tenaga pengajar native speaker</div>
+        <div class="stat-label" data-i18n="stat_4">Guru profesional berpengalaman, termasuk tenaga pengajar native speaker</div>
       </div>
     </div>
   </section>
@@ -2310,6 +2402,132 @@
     });
   });
   } // end if (wrap && canvas)
+  </script>
+
+  <!-- LANGUAGE SWITCHER -->
+  <script>
+  (function () {
+    const FLAGS = {
+      id: 'https://flagcdn.com/w40/id.png',
+      en: 'https://flagcdn.com/w40/gb.png',
+      zh: 'https://flagcdn.com/w40/cn.png'
+    };
+    const CODES = { id: 'ID', en: 'EN', zh: '中文' };
+
+    // Kamus terjemahan. Tambah key baru di sini kalau mau translate elemen lain.
+    const I18N = {
+      id: {
+        nav_tentang: 'Tentang',
+        nav_jenjang: 'Jenjang Pendidikan',
+        nav_fasilitas: 'Fasilitas',
+        nav_testimoni: 'Testimoni',
+        nav_keseharian: 'Keseharian',
+        nav_pendaftaran: 'Pendaftaran',
+        nav_cta: 'Hubungi Kami',
+        hero_eyebrow: '三语学校 - Trilingual School - Sekolah Tiga Bahasa',
+        hero_title: 'Think Global<br><span>Speak Trilingual</span>',
+        hero_desc: 'Pah Tsung School dengan kurikulum terintegrasi yang membekali siswa untuk unggul dalam Bahasa Mandarin, Inggris, dan Indonesia dengan percaya diri dan tujuan yang jelas.',
+        hero_btn_primary: 'Jelajahi Program',
+        hero_btn_outline: 'Tentang Pah Tsung School',
+        stat_1: 'Bahasa pengantar: Mandarin, Inggris, dan Bahasa Indonesia',
+        stat_2: 'Akreditasi A BAN-S/M — standar pendidikan terbaik nasional',
+        stat_3: 'Jenjang pendidikan: TK, SD, SMP, dan SMA dalam satu kompleks',
+        stat_4: 'Guru profesional berpengalaman, termasuk tenaga pengajar native speaker'
+      },
+      en: {
+        nav_tentang: 'About',
+        nav_jenjang: 'Education Levels',
+        nav_fasilitas: 'Facilities',
+        nav_testimoni: 'Testimonials',
+        nav_keseharian: 'School Life',
+        nav_pendaftaran: 'Admissions',
+        nav_cta: 'Contact Us',
+        hero_eyebrow: '三语学校 - Trilingual School - Sekolah Tiga Bahasa',
+        hero_title: 'Think Global<br><span>Speak Trilingual</span>',
+        hero_desc: 'Pah Tsung School with an integrated curriculum that empowers students to excel in Mandarin, English, and Bahasa Indonesia with confidence and purpose.',
+        hero_btn_primary: 'Explore Programs',
+        hero_btn_outline: 'About Pah Tsung School',
+        stat_1: 'Languages of instruction: Mandarin, English, and Bahasa Indonesia',
+        stat_2: 'BAN-S/M "A" Accreditation — the nation\'s highest education standard',
+        stat_3: 'Education levels: Kindergarten, Elementary, Junior, and Senior High in one complex',
+        stat_4: 'Experienced professional teachers, including native-speaking instructors'
+      },
+      zh: {
+        nav_tentang: '关于我们',
+        nav_jenjang: '教育阶段',
+        nav_fasilitas: '设施',
+        nav_testimoni: '学生评价',
+        nav_keseharian: '校园日常',
+        nav_pendaftaran: '招生入学',
+        nav_cta: '联系我们',
+        hero_eyebrow: '三语学校 - Trilingual School - Sekolah Tiga Bahasa',
+        hero_title: '放眼世界<br><span>精通三语</span>',
+        hero_desc: '八中华学校采用整合式课程，培养学生自信而有目标地精通华语、英语与印尼语。',
+        hero_btn_primary: '探索课程',
+        hero_btn_outline: '了解八中华学校',
+        stat_1: '教学语言：华语、英语与印尼语',
+        stat_2: 'BAN-S/M A级认证 — 国家最高教育标准',
+        stat_3: '教育阶段：幼儿园、小学、初中与高中同校区',
+        stat_4: '经验丰富的专业教师团队，含母语外籍教师'
+      }
+    };
+
+    const STORAGE_KEY = 'pahtsung_lang';
+    const switcher   = document.getElementById('langSwitcher');
+    const currentBtn = document.getElementById('langCurrentBtn');
+    const dropdown   = document.getElementById('langDropdown');
+    const flagImg    = document.getElementById('langCurrentFlag');
+    const codeLabel  = document.getElementById('langCurrentCode');
+    if (!switcher) return;
+
+    function applyLang(lang) {
+      if (!I18N[lang]) lang = 'id';
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (I18N[lang][key] !== undefined) el.textContent = I18N[lang][key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (I18N[lang][key] !== undefined) el.innerHTML = I18N[lang][key];
+      });
+
+      flagImg.src = FLAGS[lang];
+      codeLabel.textContent = CODES[lang];
+      document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : lang);
+
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      localStorage.setItem(STORAGE_KEY, lang);
+    }
+
+    currentBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !switcher.classList.contains('open');
+      switcher.classList.toggle('open', willOpen);
+      currentBtn.setAttribute('aria-expanded', String(willOpen));
+    });
+
+    dropdown.querySelectorAll('.lang-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyLang(btn.getAttribute('data-lang'));
+        switcher.classList.remove('open');
+        currentBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!switcher.contains(e.target)) {
+        switcher.classList.remove('open');
+        currentBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+    applyLang(saved || 'id');
+  })();
   </script>
 
 </body>
