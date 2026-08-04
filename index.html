@@ -1069,6 +1069,31 @@
     }
     .mobile-menu-cta a:hover { background: var(--gold); color: var(--navy); }
 
+    .mobile-menu-lang {
+      display: flex;
+      gap: 8px;
+      padding: 4px 24px 18px;
+      margin-bottom: 4px;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .mobile-lang-option {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      background: var(--off-white);
+      border: 1.5px solid transparent;
+      border-radius: 8px;
+      padding: 10px 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .mobile-lang-option img { width: 26px; height: 18px; object-fit: cover; border-radius: 3px; display: block; }
+    .mobile-lang-option span { font-size: 11px; font-weight: 600; color: var(--navy); }
+    .mobile-lang-option.active { border-color: var(--gold); background: rgba(245,196,0,0.14); }
+
     @media (max-width: 900px) {
       .hamburger { display: flex; }
       .nav-right { display: none; }
@@ -1378,6 +1403,20 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-lang" id="mobileLangSwitcher">
+      <button class="mobile-lang-option lang-option" type="button" data-lang="id">
+        <img src="https://flagcdn.com/w40/id.png" alt="Indonesia">
+        <span>Indonesia</span>
+      </button>
+      <button class="mobile-lang-option lang-option" type="button" data-lang="en">
+        <img src="https://flagcdn.com/w40/gb.png" alt="English">
+        <span>English</span>
+      </button>
+      <button class="mobile-lang-option lang-option" type="button" data-lang="zh">
+        <img src="https://flagcdn.com/w40/cn.png" alt="中文">
+        <span>中文</span>
+      </button>
+    </div>
     <ul>
       <li><a href="#tentang" onclick="closeMenu()" data-i18n="nav_tentang">Tentang</a></li>
       <li><a href="#pembelajaran" onclick="closeMenu()" data-i18n="nav_jenjang">Jenjang Pendidikan</a></li>
@@ -1663,49 +1702,49 @@
   <!-- CAMPUS -->
   <section class="section campus" id="kampus">
     <div class="section-inner">
-      <span class="section-eyebrow">Satu Lokasi, Semua Jenjang</span>
+      <span class="section-eyebrow" data-i18n="fasilitas_eyebrow">Satu Lokasi, Semua Jenjang</span>
       <div class="gold-divider"></div>
-      <h2 class="section-title">Fasilitas Sekolah</h2>
-      <p class="section-body" style="max-width:600px">
+      <h2 class="section-title" data-i18n="fasilitas_title">Fasilitas Sekolah</h2>
+      <p class="section-body" style="max-width:600px" data-i18n="fasilitas_desc">
         Terletak di Kompleks City Park, Cengkareng, Jakarta Barat. Pah Tsung School menghadirkan lingkungan belajar yang lengkap, nyaman, dan kondusif untuk semua jenjang dalam satu kawasan terpadu.
       </p>
       <div class="campus-grid">
         <a href="fasilitas.html#gedung" style="text-decoration:none;color:inherit;display:block;" class="campus-card">
           <img src="https://i.ibb.co.com/rGyBYwjS/IMG-2774-JPG.jpg" alt="Kampus Tangerang"/>
           <div class="campus-card-body">
-            <h4>Gedung Sekolah</h4>
+            <h4 data-i18n="fasilitas_card1_title">Gedung Sekolah</h4>
             <p>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
                 <circle cx="12" cy="9" r="2.5"/>
               </svg>
-              Kompleks City Park Blok A4, Cengkareng
+              <span data-i18n="fasilitas_card1_loc">Kompleks City Park Blok A4, Cengkareng</span>
             </p>
           </div>
         </a>
         <a href="fasilitas.html#waterplay" style="text-decoration:none;color:inherit;display:block;" class="campus-card">
           <img src="https://i.ibb.co.com/jv9GKYKn/DSCF9704-1.jpg" alt="Kampus Jakarta"/>
           <div class="campus-card-body">
-            <h4>Water Play</h4>
+            <h4 data-i18n="fasilitas_card2_title">Water Play</h4>
             <p>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
                 <circle cx="12" cy="9" r="2.5"/>
               </svg>
-              Kompleks City Park, Cengkareng Timur
+              <span data-i18n="fasilitas_card2_loc">Kompleks City Park, Cengkareng Timur</span>
             </p>
           </div>
         </a>
         <a href="fasilitas.html#sport" style="text-decoration:none;color:inherit;display:block;" class="campus-card">
           <img src="https://i.ibb.co.com/99FSjN1J/DJI-0127-1.jpg" alt="Kampus Bekasi"/>
           <div class="campus-card-body">
-            <h4>Semi Indoor Sport Field</h4>
+            <h4 data-i18n="fasilitas_card3_title">Semi Indoor Sport Field</h4>
             <p>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
                 <circle cx="12" cy="9" r="2.5"/>
               </svg>
-              Cengkareng Timur, Jakarta Barat
+              <span data-i18n="fasilitas_card3_loc">Cengkareng Timur, Jakarta Barat</span>
             </p>
           </div>
         </a>
@@ -1790,11 +1829,11 @@
 
   <!-- CTA BANNER -->
   <section class="cta-banner" id="pendaftaran">
-    <h2>Bergabunglah Bersama<br><span>Pah Tsung School</span></h2>
-    <p>Daftarkan putra-putri Anda sekarang dan berikan mereka bekal terbaik dengan fasih tiga bahasa, berkarakter, dan siap bersaing di dunia global.</p>
+    <h2 data-i18n-html="cta_title">Bergabunglah Bersama<br><span>Pah Tsung School</span></h2>
+    <p data-i18n="cta_desc">Daftarkan putra-putri Anda sekarang dan berikan mereka bekal terbaik dengan fasih tiga bahasa, berkarakter, dan siap bersaing di dunia global.</p>
     <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-      <a href="pendaftaran.html" class="btn-primary">Daftar Sekarang</a>
-      <a href="#" class="btn-outline">Informasi Pendaftaran</a>
+      <a href="pendaftaran.html" class="btn-primary" data-i18n="cta_btn_primary">Daftar Sekarang</a>
+      <a href="#" class="btn-outline" data-i18n="cta_btn_outline">Informasi Pendaftaran</a>
     </div>
   </section>
 
@@ -2432,7 +2471,20 @@
         stat_1: 'Bahasa pengantar: Mandarin, Inggris, dan Bahasa Indonesia',
         stat_2: 'Akreditasi A BAN-S/M — standar pendidikan terbaik nasional',
         stat_3: 'Jenjang pendidikan: TK, SD, SMP, dan SMA dalam satu kompleks',
-        stat_4: 'Guru profesional berpengalaman, termasuk tenaga pengajar native speaker'
+        stat_4: 'Guru profesional berpengalaman, termasuk tenaga pengajar native speaker',
+        fasilitas_eyebrow: 'Satu Lokasi, Semua Jenjang',
+        fasilitas_title: 'Fasilitas Sekolah',
+        fasilitas_desc: 'Terletak di Kompleks City Park, Cengkareng, Jakarta Barat. Pah Tsung School menghadirkan lingkungan belajar yang lengkap, nyaman, dan kondusif untuk semua jenjang dalam satu kawasan terpadu.',
+        fasilitas_card1_title: 'Gedung Sekolah',
+        fasilitas_card1_loc: 'Kompleks City Park Blok A4, Cengkareng',
+        fasilitas_card2_title: 'Water Play',
+        fasilitas_card2_loc: 'Kompleks City Park, Cengkareng Timur',
+        fasilitas_card3_title: 'Semi Indoor Sport Field',
+        fasilitas_card3_loc: 'Cengkareng Timur, Jakarta Barat',
+        cta_title: 'Bergabunglah Bersama<br><span>Pah Tsung School</span>',
+        cta_desc: 'Daftarkan putra-putri Anda sekarang dan berikan mereka bekal terbaik dengan fasih tiga bahasa, berkarakter, dan siap bersaing di dunia global.',
+        cta_btn_primary: 'Daftar Sekarang',
+        cta_btn_outline: 'Informasi Pendaftaran'
       },
       en: {
         nav_tentang: 'About',
@@ -2450,7 +2502,20 @@
         stat_1: 'Languages of instruction: Mandarin, English, and Bahasa Indonesia',
         stat_2: 'BAN-S/M "A" Accreditation — the nation\'s highest education standard',
         stat_3: 'Education levels: Kindergarten, Elementary, Junior, and Senior High in one complex',
-        stat_4: 'Experienced professional teachers, including native-speaking instructors'
+        stat_4: 'Experienced professional teachers, including native-speaking instructors',
+        fasilitas_eyebrow: 'One Location, Every Level',
+        fasilitas_title: 'School Facilities',
+        fasilitas_desc: 'Located in the City Park Complex, Cengkareng, West Jakarta. Pah Tsung School offers a complete, comfortable, and supportive learning environment for every level within one integrated campus.',
+        fasilitas_card1_title: 'School Building',
+        fasilitas_card1_loc: 'City Park Complex Block A4, Cengkareng',
+        fasilitas_card2_title: 'Water Play',
+        fasilitas_card2_loc: 'City Park Complex, East Cengkareng',
+        fasilitas_card3_title: 'Semi Indoor Sport Field',
+        fasilitas_card3_loc: 'East Cengkareng, West Jakarta',
+        cta_title: 'Join<br><span>Pah Tsung School</span>',
+        cta_desc: 'Enroll your child today and give them the best foundation — fluent in three languages, strong in character, and ready to compete on the global stage.',
+        cta_btn_primary: 'Enroll Now',
+        cta_btn_outline: 'Admission Information'
       },
       zh: {
         nav_tentang: '关于我们',
@@ -2468,7 +2533,20 @@
         stat_1: '教学语言：华语、英语与印尼语',
         stat_2: 'BAN-S/M A级认证 — 国家最高教育标准',
         stat_3: '教育阶段：幼儿园、小学、初中与高中同校区',
-        stat_4: '经验丰富的专业教师团队，含母语外籍教师'
+        stat_4: '经验丰富的专业教师团队，含母语外籍教师',
+        fasilitas_eyebrow: '一个校区，涵盖所有阶段',
+        fasilitas_title: '校园设施',
+        fasilitas_desc: '位于西雅加达千卡冷（Cengkareng）City Park社区。八中华学校为各阶段学生提供完善、舒适、有利于学习的一体化校园环境。',
+        fasilitas_card1_title: '校舍大楼',
+        fasilitas_card1_loc: 'City Park社区A4街区，千卡冷',
+        fasilitas_card2_title: '戏水乐园',
+        fasilitas_card2_loc: 'City Park社区，东千卡冷',
+        fasilitas_card3_title: '半室内运动场',
+        fasilitas_card3_loc: '东千卡冷，西雅加达',
+        cta_title: '加入<br><span>八中华学校</span>',
+        cta_desc: '现在就为您的孩子报名，让他们具备流利的三语能力、良好品格，做好在全球化世界中竞争的准备。',
+        cta_btn_primary: '立即报名',
+        cta_btn_outline: '招生信息'
       }
     };
 
@@ -2510,7 +2588,7 @@
       currentBtn.setAttribute('aria-expanded', String(willOpen));
     });
 
-    dropdown.querySelectorAll('.lang-option').forEach(btn => {
+    document.querySelectorAll('.lang-option').forEach(btn => {
       btn.addEventListener('click', () => {
         applyLang(btn.getAttribute('data-lang'));
         switcher.classList.remove('open');
