@@ -103,6 +103,80 @@
 
     .btn-cta:hover { background: var(--gold); color: var(--navy); transform: translateY(-1px); }
 
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-switcher {
+      position: relative;
+    }
+    .lang-current {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      border: 1px solid rgba(13,34,64,0.15);
+      padding: 7px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .lang-current:hover { border-color: var(--gold); background: rgba(245,196,0,0.08); }
+    .lang-current img { width: 18px; height: 13px; object-fit: cover; border-radius: 2px; display: block; }
+    .lang-current span {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.3px;
+    }
+    .lang-current svg { width: 10px; height: 10px; color: var(--navy); transition: transform 0.2s; flex-shrink: 0; }
+    .lang-switcher.open .lang-current svg { transform: rotate(180deg); }
+
+    .lang-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--white);
+      border: 1px solid rgba(13,34,64,0.1);
+      border-radius: 8px;
+      box-shadow: 0 12px 32px rgba(13,34,64,0.14);
+      min-width: 168px;
+      padding: 6px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+      z-index: 200;
+    }
+    .lang-switcher.open .lang-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 9px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+      text-align: left;
+      transition: background 0.15s;
+    }
+    .lang-option:hover { background: var(--off-white); }
+    .lang-option.active { background: rgba(245,196,0,0.12); color: var(--navy); font-weight: 600; }
+    .lang-option img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; flex-shrink: 0; }
+
+    @media (max-width: 480px) {
+      .lang-current span { display: none; }
+      .lang-current { padding: 7px 8px; }
+    }
+
     /* ── HAMBURGER ── */
     .hamburger {
       display: none;
@@ -173,6 +247,31 @@
       transition: background 0.2s;
     }
     .mobile-menu-cta a:hover { background: var(--gold); color: var(--navy); }
+
+    .mobile-menu-lang {
+      display: flex;
+      gap: 8px;
+      padding: 4px 24px 18px;
+      margin-bottom: 4px;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .mobile-lang-option {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      background: var(--off-white);
+      border: 1.5px solid transparent;
+      border-radius: 8px;
+      padding: 10px 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .mobile-lang-option img { width: 26px; height: 18px; object-fit: cover; border-radius: 3px; display: block; }
+    .mobile-lang-option span { font-size: 11px; font-weight: 600; color: var(--navy); }
+    .mobile-lang-option.active { border-color: var(--gold); background: rgba(245,196,0,0.14); }
 
     /* ── HERO ── */
     .jenjang-hero {
@@ -1143,15 +1242,33 @@
       <img src="https://i.ibb.co.com/1fMy5VXb/logo-Pah-Tsung-text-biru-utk-video.png" style="height:44px;object-fit:contain;" alt="Logo Pah Tsung" />
     </a>
     <ul class="nav-links">
-      <li><a href="index.html#tentang">Tentang</a></li>
-      <li><a href="index.html#pembelajaran">Jenjang Pendidikan</a></li>
-      <li><a href="index.html#kampus">Fasilitas</a></li>
-      <li><a href="index.html#testimoni">Testimoni</a></li>
-      <li><a href="index.html#keseharian">Keseharian</a></li>
-      <li><a href="index.html#pendaftaran">Pendaftaran</a></li>
+      <li><a href="index.html#tentang" data-i18n="nav_tentang">Tentang</a></li>
+      <li><a href="index.html#pembelajaran" data-i18n="nav_jenjang">Jenjang Pendidikan</a></li>
+      <li><a href="index.html#kampus" data-i18n="nav_fasilitas">Fasilitas</a></li>
+      <li><a href="index.html#testimoni" data-i18n="nav_testimoni">Testimoni</a></li>
+      <li><a href="index.html#keseharian" data-i18n="nav_keseharian">Keseharian</a></li>
+      <li><a href="index.html#pendaftaran" data-i18n="nav_pendaftaran">Pendaftaran</a></li>
     </ul>
     <div class="nav-right">
-      <a href="index.html#kontak" class="btn-cta">Hubungi Kami</a>
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-current" id="langCurrentBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Pilih Bahasa / Select Language / 选择语言">
+          <img id="langCurrentFlag" src="https://flagcdn.com/w40/id.png" alt="">
+          <span id="langCurrentCode">ID</span>
+          <svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-dropdown" id="langDropdown" role="menu">
+          <button class="lang-option" type="button" data-lang="id" role="menuitem">
+            <img src="https://flagcdn.com/w40/id.png" alt="Indonesia"> Bahasa Indonesia
+          </button>
+          <button class="lang-option" type="button" data-lang="en" role="menuitem">
+            <img src="https://flagcdn.com/w40/gb.png" alt="English"> English
+          </button>
+          <button class="lang-option" type="button" data-lang="zh" role="menuitem">
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文"> 中文
+          </button>
+        </div>
+      </div>
+      <a href="index.html#kontak" class="btn-cta" data-i18n="nav_cta">Hubungi Kami</a>
     </div>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -1160,16 +1277,30 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-lang" id="mobileLangSwitcher">
+      <button class="mobile-lang-option lang-option" type="button" data-lang="id">
+        <img src="https://flagcdn.com/w40/id.png" alt="Indonesia">
+        <span>Indonesia</span>
+      </button>
+      <button class="mobile-lang-option lang-option" type="button" data-lang="en">
+        <img src="https://flagcdn.com/w40/gb.png" alt="English">
+        <span>English</span>
+      </button>
+      <button class="mobile-lang-option lang-option" type="button" data-lang="zh">
+        <img src="https://flagcdn.com/w40/cn.png" alt="中文">
+        <span>中文</span>
+      </button>
+    </div>
     <ul>
-      <li><a href="index.html#tentang"      onclick="closeMenu()">Tentang</a></li>
-      <li><a href="index.html#pembelajaran" onclick="closeMenu()">Jenjang Pendidikan</a></li>
-      <li><a href="index.html#kampus"       onclick="closeMenu()">Fasilitas</a></li>
-      <li><a href="index.html#testimoni"    onclick="closeMenu()">Testimoni</a></li>
-      <li><a href="index.html#keseharian"   onclick="closeMenu()">Keseharian</a></li>
-      <li><a href="index.html#pendaftaran"  onclick="closeMenu()">Pendaftaran</a></li>
+      <li><a href="index.html#tentang"      onclick="closeMenu()" data-i18n="nav_tentang">Tentang</a></li>
+      <li><a href="index.html#pembelajaran" onclick="closeMenu()" data-i18n="nav_jenjang">Jenjang Pendidikan</a></li>
+      <li><a href="index.html#kampus"       onclick="closeMenu()" data-i18n="nav_fasilitas">Fasilitas</a></li>
+      <li><a href="index.html#testimoni"    onclick="closeMenu()" data-i18n="nav_testimoni">Testimoni</a></li>
+      <li><a href="index.html#keseharian"   onclick="closeMenu()" data-i18n="nav_keseharian">Keseharian</a></li>
+      <li><a href="index.html#pendaftaran"  onclick="closeMenu()" data-i18n="nav_pendaftaran">Pendaftaran</a></li>
     </ul>
     <div class="mobile-menu-cta">
-      <a href="index.html#kontak" onclick="closeMenu()">Hubungi Kami</a>
+      <a href="index.html#kontak" onclick="closeMenu()" data-i18n="nav_cta">Hubungi Kami</a>
     </div>
   </div>
 
@@ -1180,9 +1311,9 @@
     <div class="hero-pattern-dots"></div>
     <div class="hero-content-wrap">
       <div class="breadcrumb">
-        <a href="index.html">Beranda</a>
+        <a href="index.html" data-i18n="crumb_beranda">Beranda</a>
         <span class="sep">›</span>
-        <span>Jenjang Pendidikan</span>
+        <span data-i18n="nav_jenjang">Jenjang Pendidikan</span>
         <span class="sep">›</span>
         <span class="current" id="hero-breadcrumb">—</span>
       </div>
@@ -1191,8 +1322,8 @@
       <h1 class="hero-main-title" id="hero-title"><span></span></h1>
       <p class="hero-tagline" id="hero-tagline"></p>
       <div class="hero-cta-row">
-        <a href="pendaftaran.html" class="btn-primary">Daftar Sekarang</a>
-        <a href="index.html#pembelajaran" class="btn-outline-white">Jenjang Lainnya</a>
+        <a href="pendaftaran.html" class="btn-primary" data-i18n="btn_daftar_sekarang">Daftar Sekarang</a>
+        <a href="index.html#pembelajaran" class="btn-outline-white" data-i18n="btn_jenjang_lainnya">Jenjang Lainnya</a>
       </div>
     </div>
   </section>
@@ -1226,7 +1357,7 @@
     <!-- HIGHLIGHTS -->
     <section class="section highlights-section" id="sec-highlights">
       <div class="section-inner">
-        <span class="section-eyebrow">Keunggulan Program</span>
+        <span class="section-eyebrow" data-i18n="highlights_eyebrow">Keunggulan Program</span>
         <div class="gold-divider"></div>
         <h2 class="section-title" id="highlights-title"></h2>
         <div class="highlights-grid" id="highlights-grid"></div>
@@ -1248,9 +1379,9 @@
     <!-- OTHER JENJANG -->
     <section class="section other-jenjang" id="sec-other">
       <div class="section-inner">
-        <span class="section-eyebrow">Jenjang Pendidikan Lainnya</span>
+        <span class="section-eyebrow" data-i18n="other_eyebrow">Jenjang Pendidikan Lainnya</span>
         <div class="gold-divider"></div>
-        <h2 class="section-title">Satu Atap untuk Semua Jenjang</h2>
+        <h2 class="section-title" data-i18n="other_title">Satu Atap untuk Semua Jenjang</h2>
         <div class="other-jenjang-grid" id="other-jenjang-grid"></div>
       </div>
     </section>
@@ -1259,11 +1390,11 @@
 
   <!-- CTA BANNER -->
   <section class="cta-banner">
-    <h2>Bergabunglah Bersama<br><span>Pah Tsung School</span></h2>
-    <p>Daftarkan putra-putri Anda dan berikan mereka bekal terbaik — fasih tiga bahasa, berkarakter, dan siap bersaing di dunia global.</p>
+    <h2 data-i18n-html="cta_title">Bergabunglah Bersama<br><span>Pah Tsung School</span></h2>
+    <p data-i18n="cta_desc">Daftarkan putra-putri Anda dan berikan mereka bekal terbaik — fasih tiga bahasa, berkarakter, dan siap bersaing di dunia global.</p>
     <div class="cta-buttons">
-      <a href="pendaftaran.html" class="btn-primary">Daftar Sekarang</a>
-      <a href="index.html#kontak" class="btn-outline-white">Hubungi Kami</a>
+      <a href="pendaftaran.html" class="btn-primary" data-i18n="btn_daftar_sekarang">Daftar Sekarang</a>
+      <a href="index.html#kontak" class="btn-outline-white" data-i18n="nav_cta">Hubungi Kami</a>
     </div>
   </section>
 
@@ -1277,29 +1408,29 @@
           </div>
           <span class="footer-logo-text">Pah Tsung School</span>
         </div>
-        <p class="footer-desc">Sekolah trilingual terkemuka di Jakarta Barat — membentuk generasi yang fasih tiga bahasa, bermoral, berkarakter, dan siap bersaing di era globalisasi.</p>
+        <p class="footer-desc" data-i18n="footer_desc">Sekolah trilingual terkemuka di Jakarta Barat — membentuk generasi yang fasih tiga bahasa, bermoral, berkarakter, dan siap bersaing di era globalisasi.</p>
       </div>
       <div class="footer-col">
-        <h5>Sekolah</h5>
+        <h5 data-i18n="footer_col_sekolah">Sekolah</h5>
         <ul>
-          <li><a href="#">Tentang Pah Tsung</a></li>
-          <li><a href="#">Visi &amp; Misi</a></li>
+          <li><a href="#" data-i18n="footer_link_tentang">Tentang Pah Tsung</a></li>
+          <li><a href="#" data-i18n="footer_link_visimisi">Visi &amp; Misi</a></li>
           <li><a href="#">Yayasan Panca Cemerlang</a></li>
-          <li><a href="#">Akreditasi A</a></li>
+          <li><a href="#" data-i18n="footer_link_akreditasi">Akreditasi A</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h5>Program</h5>
+        <h5 data-i18n="footer_col_program">Program</h5>
         <ul>
-          <li><a href="jenjang-pendidikan.html#tk">Taman Kanak-Kanak</a></li>
-          <li><a href="jenjang-pendidikan.html#sd">Sekolah Dasar</a></li>
+          <li><a href="jenjang-pendidikan.html#tk" data-i18n="footer_link_tk">Taman Kanak-Kanak</a></li>
+          <li><a href="jenjang-pendidikan.html#sd" data-i18n="footer_link_sd">Sekolah Dasar</a></li>
           <li><a href="jenjang-pendidikan.html#smp">SMP</a></li>
           <li><a href="jenjang-pendidikan.html#sma">SMA</a></li>
-          <li><a href="#">Program Trilingual</a></li>
+          <li><a href="#" data-i18n="footer_link_trilingual">Program Trilingual</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h5>Kontak</h5>
+        <h5 data-i18n="footer_col_kontak">Kontak</h5>
         <ul>
           <li><a href="#">021-22522239</a></li>
           <li><a href="#">info@pahtsung.sch.id</a></li>
@@ -1309,16 +1440,18 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Sekolah Pah Tsung. Hak cipta dilindungi.</span>
+      <span data-i18n="footer_copyright">© 2025 Sekolah Pah Tsung. Hak cipta dilindungi.</span>
       <span>Yayasan Panca Cemerlang</span>
     </div>
   </footer>
 
   <script>
     /* ═══════════════════════════════════════
-       DATA — semua 4 jenjang
+       DATA — semua 4 jenjang (ID / EN / ZH)
     ═══════════════════════════════════════ */
-    const JENJANG = [
+    const JENJANG_I18N = { id: null, en: null, zh: null };
+
+    JENJANG_I18N.id = [
       {
         id: 'tk',
         label: 'TK',
@@ -1461,16 +1594,415 @@
       },
     ];
 
+    JENJANG_I18N.en = [
+      {
+        id: 'tk',
+        label: 'TK',
+        chinLabel: '幼儿园',
+        fullName: 'Kindergarten',
+        subLabel: 'Nursery · Playgroup · Kindergarten',
+        grades: 'Ages 2 – 6',
+        tagline: 'A Warm and Meaningful First Trilingual Foundation',
+        heroImg: 'https://i.ibb.co.com/fz1f8ygx/TK-banner-web.jpg',
+        desc1: 'Pah Tsung Kindergarten is designed as a warm, safe, and stimulating first learning environment. Through guided play-based learning, young children are introduced to three languages — Mandarin, English, and Bahasa Indonesia — naturally, as part of their everyday activities.',
+        desc2: 'Supported by experienced teachers, including native Mandarin-speaking instructors, Pah Tsung Kindergarten builds a strong trilingual foundation before children move on to elementary school. A dedicated water play area and exploration spaces turn every day into a memorable learning adventure.',
+        stats: [
+          { num: '2–6', label: 'Student Age' },
+          { num: '3', label: 'Languages of Instruction' },
+          { num: 'Play-Based', label: 'Approach' },
+        ],
+        highlights: [
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><rect x='8' y='32' width='20' height='20' rx='4' fill='#FF7E47'/><circle cx='18' cy='42' r='3' fill='#fff'/><rect x='36' y='32' width='20' height='20' rx='4' fill='#4AB8FF'/><circle cx='46' cy='42' r='3' fill='#fff'/><path d='M22 12 h20 a4 4 0 0 1 4 4 v12 a4 4 0 0 1 -4 4 h-20 a4 4 0 0 1 -4 -4 v-12 a4 4 0 0 1 4 -4 z' fill='#FFD043'/><circle cx='28' cy='22' r='2' fill='#fff'/><circle cx='36' cy='22' r='2' fill='#fff'/><path d='M30 26 q2 2 4 0' stroke='#fff' stroke-width='2' fill='none' stroke-linecap='round'/></svg>", title: 'Play-Based Learning', desc: 'Guided play that stimulates children\'s cognitive, social, and emotional development in a holistic way.' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><path d='M12 16 c0-4 4-4 8-4 h32 c4 0 4 0 4 4 v32 c0 4-4 4-8 4 h-32 c-4 0-4 0-4-4 z' fill='#FFD043'/><path d='M20 12 v40' stroke='#FFF' stroke-width='3' stroke-linecap='round'/><circle cx='34' cy='26' r='3' fill='#1A365D'/><circle cx='46' cy='26' r='3' fill='#1A365D'/><path d='M36 34 q4 4 8 0' stroke='#1A365D' stroke-width='2.5' fill='none' stroke-linecap='round'/><path d='M16 18 h4 M16 26 h4 M16 34 h4' stroke='#fff' stroke-width='2' stroke-linecap='round'/></svg>", title: 'Trilingual Storytelling', desc: 'Interactive storytelling sessions in three languages to build vocabulary and a love of language from an early age.' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><circle cx='32' cy='32' r='18' fill='#4AB8FF'/><circle cx='32' cy='32' r='14' fill='#EBF7FF'/><path d='M32 6 c0 0 4 6 4 10 s-4 6-4 6 s-4-2-4-6 s4-10 4-10 z' fill='#4AB8FF'/><path d='M54 26 c0 0-4 6-8 4 s-4-6-4-6 s4-2 6 2 s6 0 6 0 z' fill='#4AB8FF'/><circle cx='27' cy='30' r='2' fill='#1A365D'/><circle cx='37' cy='30' r='2' fill='#1A365D'/><path d='M29 36 q3 3 6 0' stroke='#1A365D' stroke-width='2' fill='none'/></svg>", title: 'Water Play Area', desc: 'An exclusive water play facility for fun, educational sensory exploration that supports children\'s motor development.' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><path d='M32 50 C12 34 16 14 32 24 C48 14 52 34 32 50 Z' fill='#FF6B8B'/><path d='M32 24 v-10' stroke='#5CE1B4' stroke-width='3' stroke-linecap='round'/><path d='M32 14 q6-6 10-2 q4 4-10 12' fill='#5CE1B4'/><path d='M32 16 q-6-6-10-2 q-4 4 10 12' fill='#5CE1B4'/></svg>", title: 'Character Building', desc: 'The values of being optimistic, cooperative, and dedicated — Pah Tsung\'s motto — are instilled from the very first stage of school life.' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><circle cx='22' cy='44' r='8' fill='#5CE1B4'/><circle cx='46' cy='38' r='8' fill='#5CE1B4'/><path d='M26 44 V16 L50 10 V38' stroke='#5CE1B4' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><path d='M26 24 L50 18' stroke='#5CE1B4' stroke-width='4'/><circle cx='20' cy='42' r='1.5' fill='#fff'/><circle cx='44' cy='36' r='1.5' fill='#fff'/></svg>", title: 'Arts & Music', desc: 'Arts, music, and movement activities that develop creativity, aesthetic appreciation, and fine motor skills.' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><circle cx='20' cy='24' r='10' fill='#FFD043'/><path d='M10 48 c0-8 6-10 10-10 s10 2 10 10 z' fill='#FFD043'/><circle cx='44' cy='24' r='10' fill='#4AB8FF'/><path d='M34 48 c0-8 6-10 10-10 s10 2 10 10 z' fill='#4AB8FF'/><path d='M24 38 h16' stroke='#FF7E47' stroke-width='4' stroke-linecap='round'/></svg>", title: 'Active Socialization', desc: 'A program that encourages positive peer interaction to build social skills and empathy from an early age.' },
+        ],
+        highlightsTitle: 'Learning, Playing, and Growing Together',
+        subjects: ['Mandarin', 'English', 'Bahasa Indonesia', 'Basic Mathematics', 'Natural Science', 'Arts & Crafts', 'Music & Movement', 'Character & Moral Values'],
+        kurikulumTitle: 'Merdeka Curriculum & Integrated Thematic Approach',
+        kurikulumDesc: 'Pah Tsung Kindergarten implements the Merdeka Curriculum for early childhood education with an integrated thematic approach. Every learning theme naturally reinforces the three languages, developing 6 aspects of child development: religious & moral values, cognitive, language, social-emotional, physical-motor, and the arts.',
+        kurikulumFeatures: [
+          'Natural introduction to letters and numbers in three languages',
+          'Activities take place in a structured, safe, play-based environment',
+          'Holistic, regular assessment of children\'s development',
+          'Active daily communication between teachers and parents',
+        ],
+      },
+      {
+        id: 'sd',
+        label: 'SD',
+        chinLabel: '小学',
+        fullName: 'Elementary School',
+        subLabel: 'Grades 1 – 6',
+        grades: 'Ages 6 – 12',
+        tagline: 'Building a Solid, Well-Rounded Trilingual Foundation',
+        heroImg: 'https://i.ibb.co.com/0yXN0vDB/DSC-3494.jpg',
+        desc1: 'Pah Tsung Elementary School is where a strong academic foundation is built alongside an increasingly deep command of three languages. With the progressive Merdeka Curriculum, students learn to think critically, collaborate, and develop disciplined, tolerant, and competitive character.',
+        desc2: 'Every class is led by experienced teachers, with Mandarin taught by native-speaking instructors from China. A STEAM program and a wide range of extracurricular activities complete a holistic learning experience that prepares students confidently for the next stage.',
+        stats: [
+          { num: '6', label: 'Grade Levels' },
+          { num: 'A', label: 'BAN-S/M Accreditation' },
+          { num: 'Native', label: 'Mandarin Teachers' },
+        ],
+        highlights: [
+          { icon: '📚', title: 'Merdeka Curriculum', desc: 'Implementation of the Merdeka Curriculum, encouraging project-based learning, differentiation, and development of the Pancasila Student Profile.' },
+          { icon: '🈳', title: 'Native Mandarin Speakers', desc: 'Mandarin lessons are taught directly by native-speaking teachers to ensure authentic pronunciation and understanding.' },
+          { icon: '🔬', title: 'STEAM Program', desc: 'Integration of Science, Technology, Engineering, Art, and Mathematics in fun and relevant contextual learning.' },
+          { icon: '🏆', title: 'Competitions & Achievements', desc: 'Students actively take part in academic olympiads, Mandarin language competitions, and sports tournaments at city and national level.' },
+          { icon: '🎭', title: 'Cultural Festivals', desc: 'Chinese cultural celebrations such as Lunar New Year, the Mid-Autumn Festival, and the Dragon Boat Festival as part of cultural learning.' },
+          { icon: '🌍', title: 'Global Awareness', desc: 'Students are introduced to a global perspective through bilingual content and teaching that engages contextually with East Asian culture.' },
+        ],
+        highlightsTitle: 'Strong Academics, Strong Character',
+        subjects: ['Mandarin (Intensive)', 'English', 'Bahasa Indonesia', 'Social & Natural Sciences', 'Science', 'Mathematics', 'Math', 'Physical Education', 'Arts & Culture', 'Informatics', 'Religious & Character Education', 'P5 Project (Pancasila Student Profile)'],
+        kurikulumTitle: 'Merdeka Curriculum with Trilingual Reinforcement',
+        kurikulumDesc: 'Pah Tsung Elementary School implements the Merdeka Curriculum with a special emphasis on strengthening all three languages. A larger Mandarin learning portion than in general schools ensures students achieve solid communicative competence. Project-Based Learning encourages students to think critically and collaborate actively.',
+        kurikulumFeatures: [
+          'A more intensive Mandarin portion compared to typical national schools',
+          'Cross-subject project-based learning every semester',
+          'Formative and summative assessment in line with the Merdeka Curriculum',
+          'Compulsory and elective extracurriculars that support students\' talents',
+        ],
+      },
+      {
+        id: 'smp',
+        label: 'SMP',
+        chinLabel: '初中',
+        fullName: 'Junior High School',
+        subLabel: 'Grades 7 – 9',
+        grades: 'Ages 12 – 15',
+        tagline: 'Sharpening Potential, Widening Horizons',
+        heroImg: 'https://i.ibb.co.com/C3DWH8dr/L1370753.jpg',
+        desc1: 'Pah Tsung Junior High School is where students\' academic ability and character develop significantly. With increasingly in-depth teaching methods, students sharpen their analytical thinking, multilingual communication, and leadership skills as valuable assets for the future.',
+        desc2: 'At Pah Tsung Junior High, students\' Mandarin skills are further strengthened through intensive classes with native speakers and HSK exam preparation. Student council activities, extracurriculars, and cultural exchange programs build independent, confident character ready to compete both nationally and internationally.',
+        stats: [
+          { num: '3', label: 'Years of Study' },
+          { num: 'HSK', label: 'Mandarin Certification' },
+          { num: 'A', label: 'BAN-S/M Accreditation' },
+        ],
+        highlights: [
+          { icon: '🎓', title: 'Deeper Academics', desc: 'A more in-depth curriculum with an emphasis on analytical thinking, scientific reasoning, and complex problem-solving.' },
+          { icon: '🈳', title: 'HSK Preparation', desc: 'An intensive program preparing students for the HSK (Hanyu Shuiping Kaoshi) exam, an internationally recognized Mandarin proficiency certification.' },
+          { icon: '👥', title: 'Student Council & Leadership', desc: 'An active Student Council (OSIS) that trains students in leadership, organization, and decision-making.' },
+          { icon: '🔍', title: 'Project-Based Learning', desc: 'Project-based learning that integrates multiple subjects to prepare students for real-world challenges.' },
+          { icon: '🏸', title: 'Diverse Extracurriculars', desc: 'A range of extracurricular options from sports and the arts to robotics, Mandarin debate, and an English club.' },
+          { icon: '🌏', title: 'Cultural Exchange Programs', desc: 'Opportunities to interact with partner schools in China through cultural exchange programs and study visits.' },
+        ],
+        highlightsTitle: 'Independent, Confident, and Ready to Compete',
+        subjects: ['Mandarin (Intensive + HSK prep)', 'English', 'Bahasa Indonesia', 'Mathematics', 'Science (Physics, Biology, Chemistry)', 'Social Studies (Geography, History, Economics)', 'Physical Education', 'Arts & Culture', 'Informatics', 'Religious & Character Education', 'P5 Project'],
+        kurikulumTitle: 'Merdeka Curriculum & International HSK Preparation',
+        kurikulumDesc: 'Pah Tsung Junior High School implements the Merdeka Curriculum with a focus on strengthening higher-order thinking skills (HOTS). The intensive Mandarin program includes preparation for HSK levels 2–4, ensuring students hold an internationally standardized level of Mandarin proficiency.',
+        kurikulumFeatures: [
+          'Target of reaching HSK level 2–4 by the end of junior high',
+          'Cross-subject project-based learning every semester',
+          'Soft skill development: leadership, presentation, and collaboration',
+          'Guidance for national exams and senior high school entrance selection',
+        ],
+      },
+      {
+        id: 'sma',
+        label: 'SMA',
+        chinLabel: '高中',
+        fullName: 'Senior High School',
+        subLabel: 'Grades 10 – 12',
+        grades: 'Ages 15 – 18',
+        tagline: 'Ready to Step Onto the World Stage',
+        heroImg: 'https://i.ibb.co.com/q3zrP7GW/DSCF5296.jpg',
+        desc1: 'Pah Tsung Senior High School is the culmination of the Pah Tsung education journey, preparing students to enter the best universities in Indonesia and abroad — especially renowned universities in China. With fluent Mandarin and a solid academic foundation, Pah Tsung graduates are ready to compete on the global stage.',
+        desc2: 'At the senior high level, students may choose the Science or Social Studies track according to their interests and strengths. A comprehensive university preparation program includes guidance for scholarships to China, advanced HSK preparation, and academic counseling to help every student find their best educational path.',
+        stats: [
+          { num: 'Science/Social', label: 'Track Options' },
+          { num: 'HSK 4–6', label: 'Certification Target' },
+          { num: '100%', label: 'Continue to Higher Ed' },
+        ],
+        highlights: [
+          { icon: '🏛️', title: 'University Counseling', desc: 'University counseling services that help students choose the best campus in Indonesia, China, and other countries according to their potential.' },
+          { icon: '🈳', title: 'Advanced HSK', desc: 'An HSK level 4–6 preparation program that opens the door to Chinese Government Scholarships (CGS).' },
+          { icon: '📝', title: 'Scholarship Preparation', desc: 'Intensive guidance for applying to scholarships at universities in China, including document preparation, interviews, and language proficiency tests.' },
+          { icon: '🔬', title: 'Science & Social Studies Tracks', desc: 'A choice of the Science track (Mathematics, Physics, Chemistry, Biology) and the Social Studies track (Economics, Geography, History, Sociology), taught trilingually.' },
+          { icon: '🌐', title: 'IELTS & TOEFL Prep', desc: 'IELTS and TOEFL preparation programs opening the door to English-medium universities worldwide.' },
+          { icon: '📊', title: 'Youth Research Projects', desc: 'A research and innovation program that trains students to think systematically, analyze data, and contribute to knowledge.' },
+        ],
+        highlightsTitle: 'Toward the World\'s Best Universities',
+        subjects: ['Mandarin (Advanced / HSK 4–6)', 'English (IELTS/TOEFL)', 'Bahasa Indonesia', 'Mathematics', 'Science: Physics, Chemistry, Biology / Social Studies: Economics, Geography, History, Sociology', 'Informatics', 'Physical Education', 'Arts & Culture', 'Religious & Character Education', 'P5 Project'],
+        kurikulumTitle: 'Merdeka Curriculum & International University Pathway',
+        kurikulumDesc: 'Pah Tsung Senior High School implements the Merdeka Curriculum with trilingual reinforcement, preparing students for both the national university entrance exam (SNBT) and international university admissions. Pah Tsung alumni have gone on to study at renowned universities in China, Taiwan, Australia, and Indonesia.',
+        kurikulumFeatures: [
+          'HSK 4–6 preparation to open Chinese government scholarship opportunities',
+          'IELTS & TOEFL guidance for English-medium universities',
+          'Intensive university counseling starting from grade 11',
+          'Youth research project (KIR) program and research presentations',
+        ],
+      },
+    ];
+
+    JENJANG_I18N.zh = [
+      {
+        id: 'tk',
+        label: 'TK',
+        chinLabel: '幼儿园',
+        fullName: '幼儿园',
+        subLabel: '托班 · 游戏班 · 幼儿园',
+        grades: '2 – 6 岁',
+        tagline: '温暖而有意义的三语启蒙教育',
+        heroImg: 'https://i.ibb.co.com/fz1f8ygx/TK-banner-web.jpg',
+        desc1: 'Pah Tsung 幼儿园致力于打造温暖、安全且富有启发性的第一学习环境。通过有引导的游戏化学习，幼儿在日常生活中自然而然地接触普通话、英语和印尼语三种语言。',
+        desc2: '在经验丰富的教师团队（包括普通话母语教师）的支持下，Pah Tsung 幼儿园为孩子升入小学前打下坚实的三语基础。专属戏水区和探索空间让每一天都成为难忘的学习冒险。',
+        stats: [
+          { num: '2–6', label: '学生年龄' },
+          { num: '3', label: '教学语言' },
+          { num: '游戏化', label: '教学方式' },
+        ],
+        highlights: [
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><rect x='8' y='32' width='20' height='20' rx='4' fill='#FF7E47'/><circle cx='18' cy='42' r='3' fill='#fff'/><rect x='36' y='32' width='20' height='20' rx='4' fill='#4AB8FF'/><circle cx='46' cy='42' r='3' fill='#fff'/><path d='M22 12 h20 a4 4 0 0 1 4 4 v12 a4 4 0 0 1 -4 4 h-20 a4 4 0 0 1 -4 -4 v-12 a4 4 0 0 1 4 -4 z' fill='#FFD043'/><circle cx='28' cy='22' r='2' fill='#fff'/><circle cx='36' cy='22' r='2' fill='#fff'/><path d='M30 26 q2 2 4 0' stroke='#fff' stroke-width='2' fill='none' stroke-linecap='round'/></svg>", title: '游戏化学习', desc: '通过有引导的游戏，全面促进儿童认知、社交与情感的发展。' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><path d='M12 16 c0-4 4-4 8-4 h32 c4 0 4 0 4 4 v32 c0 4-4 4-8 4 h-32 c-4 0-4 0-4-4 z' fill='#FFD043'/><path d='M20 12 v40' stroke='#FFF' stroke-width='3' stroke-linecap='round'/><circle cx='34' cy='26' r='3' fill='#1A365D'/><circle cx='46' cy='26' r='3' fill='#1A365D'/><path d='M36 34 q4 4 8 0' stroke='#1A365D' stroke-width='2.5' fill='none' stroke-linecap='round'/><path d='M16 18 h4 M16 26 h4 M16 34 h4' stroke='#fff' stroke-width='2' stroke-linecap='round'/></svg>", title: '三语讲故事', desc: '以三种语言进行互动式讲故事活动，从小培养词汇量与语言兴趣。' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><circle cx='32' cy='32' r='18' fill='#4AB8FF'/><circle cx='32' cy='32' r='14' fill='#EBF7FF'/><path d='M32 6 c0 0 4 6 4 10 s-4 6-4 6 s-4-2-4-6 s4-10 4-10 z' fill='#4AB8FF'/><path d='M54 26 c0 0-4 6-8 4 s-4-6-4-6 s4-2 6 2 s6 0 6 0 z' fill='#4AB8FF'/><circle cx='27' cy='30' r='2' fill='#1A365D'/><circle cx='37' cy='30' r='2' fill='#1A365D'/><path d='M29 36 q3 3 6 0' stroke='#1A365D' stroke-width='2' fill='none'/></svg>", title: '戏水区', desc: '专属戏水设施带来有趣且富有教育意义的感官探索体验，促进儿童动作发展。' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><path d='M32 50 C12 34 16 14 32 24 C48 14 52 34 32 50 Z' fill='#FF6B8B'/><path d='M32 24 v-10' stroke='#5CE1B4' stroke-width='3' stroke-linecap='round'/><path d='M32 14 q6-6 10-2 q4 4-10 12' fill='#5CE1B4'/><path d='M32 16 q-6-6-10-2 q-4 4 10 12' fill='#5CE1B4'/></svg>", title: '品格培养', desc: '从入学第一天起，就将 Pah Tsung 校训中乐观、合作、奉献的价值观融入日常教育。' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><circle cx='22' cy='44' r='8' fill='#5CE1B4'/><circle cx='46' cy='38' r='8' fill='#5CE1B4'/><path d='M26 44 V16 L50 10 V38' stroke='#5CE1B4' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><path d='M26 24 L50 18' stroke='#5CE1B4' stroke-width='4'/><circle cx='20' cy='42' r='1.5' fill='#fff'/><circle cx='44' cy='36' r='1.5' fill='#fff'/></svg>", title: '艺术与音乐', desc: '艺术、音乐与律动活动，培养创造力、审美能力与精细动作技能。' },
+          { icon: "<svg viewBox='0 0 64 64' width='44' height='44'><circle cx='20' cy='24' r='10' fill='#FFD043'/><path d='M10 48 c0-8 6-10 10-10 s10 2 10 10 z' fill='#FFD043'/><circle cx='44' cy='24' r='10' fill='#4AB8FF'/><path d='M34 48 c0-8 6-10 10-10 s10 2 10 10 z' fill='#4AB8FF'/><path d='M24 38 h16' stroke='#FF7E47' stroke-width='4' stroke-linecap='round'/></svg>", title: '积极社交', desc: '鼓励同伴间积极互动的活动，从小培养社交能力与同理心。' },
+        ],
+        highlightsTitle: '在学习、游戏中共同成长',
+        subjects: ['普通话', '英语', '印尼语', '基础数学', '自然科学', '美术与手工', '音乐与律动', '品格与道德教育'],
+        kurikulumTitle: '自由课程（Merdeka）与主题式统整教学',
+        kurikulumDesc: 'Pah Tsung 幼儿园针对学前教育阶段实施自由课程（Kurikulum Merdeka），采用主题式统整教学法。每个学习主题都自然融入三语教学，全面发展儿童六大发展面向：宗教与道德价值观、认知、语言、社会情感、体能动作以及艺术。',
+        kurikulumFeatures: [
+          '在三种语言中自然认识字母与数字',
+          '活动在结构化、安全的游戏氛围中进行',
+          '定期对儿童发展进行全面评估',
+          '教师与家长每日保持积极沟通',
+        ],
+      },
+      {
+        id: 'sd',
+        label: 'SD',
+        chinLabel: '小学',
+        fullName: '小学',
+        subLabel: '一至六年级',
+        grades: '6 – 12 岁',
+        tagline: '打造扎实、全面的三语能力',
+        heroImg: 'https://i.ibb.co.com/0yXN0vDB/DSC-3494.jpg',
+        desc1: 'Pah Tsung 小学是学生在深化三语能力的同时建立扎实学业基础的阶段。通过循序渐进的自由课程，学生学习批判性思维、团队协作，并从小培养自律、包容且富有竞争力的品格。',
+        desc2: '每个班级均由经验丰富的教师授课，普通话课程由来自中国的母语教师执教。丰富的 STEAM 课程与课外活动共同构成全面的学习体验，帮助学生自信迈向下一阶段。',
+        stats: [
+          { num: '6', label: '年级数' },
+          { num: 'A', label: 'BAN-S/M 认证等级' },
+          { num: '母语教师', label: '普通话师资' },
+        ],
+        highlights: [
+          { icon: '📚', title: '自由课程（Merdeka）', desc: '推行自由课程，鼓励项目式学习、差异化教学，并培养 Pancasila 学生素养。' },
+          { icon: '🈳', title: '普通话母语教师', desc: '普通话课程由母语教师直接授课，确保发音与理解的原汁原味。' },
+          { icon: '🔬', title: 'STEAM 课程', desc: '融合科学、技术、工程、艺术与数学，在有趣且贴近生活的情境中学习。' },
+          { icon: '🏆', title: '竞赛与荣誉', desc: '学生积极参与学科奥林匹克竞赛、普通话比赛以及市级和全国性体育赛事。' },
+          { icon: '🎭', title: '文化节庆', desc: '将农历新年、中秋节、端午节等中华文化庆典融入文化学习活动。' },
+          { icon: '🌍', title: '国际视野', desc: '通过双语内容与贴近东亚文化情境的教学，帮助学生建立国际视野。' },
+        ],
+        highlightsTitle: '学业优异，品格坚韧',
+        subjects: ['普通话（强化）', '英语', '印尼语', '社会与自然科学', '科学', '数学', 'Math', '体育', '艺术与文化', '信息科技', '宗教与品格教育', 'P5 专题项目（Pancasila 学生素养）'],
+        kurikulumTitle: '自由课程与三语强化教学',
+        kurikulumDesc: 'Pah Tsung 小学实施自由课程，并特别加强三语教学。相较一般学校更高比重的普通话课程，确保学生获得扎实的沟通能力。项目式学习则鼓励学生积极思考、主动协作。',
+        kurikulumFeatures: [
+          '普通话课程比重高于一般国民学校',
+          '每学期开展跨学科项目式学习',
+          '依循自由课程标准进行形成性与总结性评估',
+          '必修与选修课外活动，支持学生多元发展',
+        ],
+      },
+      {
+        id: 'smp',
+        label: 'SMP',
+        chinLabel: '初中',
+        fullName: '初中',
+        subLabel: '七至九年级',
+        grades: '12 – 15 岁',
+        tagline: '发掘潜能，开拓视野',
+        heroImg: 'https://i.ibb.co.com/C3DWH8dr/L1370753.jpg',
+        desc1: 'Pah Tsung 初中是学生学业能力与人格特质显著成长的阶段。通过日益深入的教学方法，学生磨练分析性思维、多语言沟通与领导能力，为未来打下宝贵基础。',
+        desc2: '在 Pah Tsung 初中，学生通过与母语教师的强化课程以及 HSK 考试备考，进一步提升普通话能力。丰富的学生会活动、课外活动与文化交流项目，培养独立、自信且具备国内外竞争力的品格。',
+        stats: [
+          { num: '3', label: '就读年限' },
+          { num: 'HSK', label: '普通话认证' },
+          { num: 'A', label: 'BAN-S/M 认证等级' },
+        ],
+        highlights: [
+          { icon: '🎓', title: '学术深化', desc: '更深入的课程设计，着重分析性思维、科学推理与复杂问题解决能力。' },
+          { icon: '🈳', title: 'HSK 备考', desc: '强化课程帮助学生备考国际认可的普通话水平考试 HSK（汉语水平考试）。' },
+          { icon: '👥', title: '学生会与领导力', desc: '活跃的学生会组织（OSIS），培养学生的领导力、组织能力与决策能力。' },
+          { icon: '🔍', title: '项目式学习', desc: '融合多学科的项目式学习，帮助学生做好应对真实挑战的准备。' },
+          { icon: '🏸', title: '多元课外活动', desc: '从体育、艺术、机器人到普通话辩论社与英语社等丰富课外活动选择。' },
+          { icon: '🌏', title: '文化交流项目', desc: '通过文化交流项目与游学，与中国合作学校互动交流。' },
+        ],
+        highlightsTitle: '独立自信，从容竞争',
+        subjects: ['普通话（强化 + HSK 备考）', '英语', '印尼语', '数学', '自然科学（物理、生物、化学）', '社会科学（地理、历史、经济）', '体育', '艺术与文化', '信息科技', '宗教与品格教育', 'P5 专题项目'],
+        kurikulumTitle: '自由课程与国际 HSK 备考',
+        kurikulumDesc: 'Pah Tsung 初中实施自由课程，着重培养高阶思维能力（HOTS）。强化版普通话课程涵盖 HSK 2–4 级备考，确保学生具备国际标准化的普通话能力。',
+        kurikulumFeatures: [
+          '初中阶段目标达成 HSK 2–4 级',
+          '每学期开展跨学科项目式学习',
+          '软实力培养：领导力、演讲表达与团队协作',
+          '国家考试与高中入学选拔备考辅导',
+        ],
+      },
+      {
+        id: 'sma',
+        label: 'SMA',
+        chinLabel: '高中',
+        fullName: '高中',
+        subLabel: '十至十二年级',
+        grades: '15 – 18 岁',
+        tagline: '整装待发，迈向国际舞台',
+        heroImg: 'https://i.ibb.co.com/q3zrP7GW/DSCF5296.jpg',
+        desc1: 'Pah Tsung 高中是整个教育历程的巅峰阶段，帮助学生进入印尼及海外顶尖高校——尤其是中国知名大学。凭借流利的普通话能力与扎实的学业基础，Pah Tsung 毕业生已做好在全球舞台上竞争的准备。',
+        desc2: '在高中阶段，学生可根据兴趣与特长选择理科或文科方向。全面的大学升学准备项目涵盖赴华留学奖学金辅导、进阶 HSK 备考，以及学业咨询服务，帮助每位学生找到最适合自己的升学之路。',
+        stats: [
+          { num: '理科/文科', label: '分科选择' },
+          { num: 'HSK 4–6', label: '认证目标' },
+          { num: '100%', label: '升入高等院校' },
+        ],
+        highlights: [
+          { icon: '🏛️', title: '大学升学咨询', desc: '大学升学咨询服务，协助学生根据自身潜力选择印尼、中国及其他国家的最佳院校。' },
+          { icon: '🈳', title: '进阶 HSK', desc: 'HSK 4–6 级备考项目，为学生开启申请中国政府奖学金（CGS）的机会。' },
+          { icon: '📝', title: '奖学金备考辅导', desc: '为申请中国大学奖学金提供密集辅导，包括材料准备、面试与语言能力测试。' },
+          { icon: '🔬', title: '理科与文科方向', desc: '提供理科（数学、物理、化学、生物）与文科（经济、地理、历史、社会学）方向选择，并以三语授课。' },
+          { icon: '🌐', title: 'IELTS & TOEFL 备考', desc: 'IELTS 与 TOEFL 备考课程，为申请全球英语授课大学开启机会。' },
+          { icon: '📊', title: '青少年科研项目', desc: '科研与创新项目，训练学生系统性思考、数据分析与知识贡献能力。' },
+        ],
+        highlightsTitle: '迈向世界顶尖大学',
+        subjects: ['普通话（高阶 / HSK 4–6）', '英语（IELTS/TOEFL）', '印尼语', '数学', '理科：物理、化学、生物 / 文科：经济、地理、历史、社会学', '信息科技', '体育', '艺术与文化', '宗教与品格教育', 'P5 专题项目'],
+        kurikulumTitle: '自由课程与国际大学升学路径',
+        kurikulumDesc: 'Pah Tsung 高中在自由课程基础上强化三语教学，帮助学生同时备考国家大学入学考试（SNBT）与国际大学申请。历届 Pah Tsung 校友已成功升入中国、台湾、澳大利亚及印尼的知名高校。',
+        kurikulumFeatures: [
+          'HSK 4–6 级备考，开启中国政府奖学金申请机会',
+          'IELTS 与 TOEFL 辅导，助力申请英语授课大学',
+          '自 11 年级起提供密集大学升学咨询',
+          '青少年科研项目（KIR）与研究成果发表',
+        ],
+      },
+    ];
+
+    let currentLang = 'id';
+
+    /* ═══════════════════════════════════════
+       KAMUS TEKS STATIS (UI) — ID / EN / ZH
+    ═══════════════════════════════════════ */
+    const I18N_UI = {
+      id: {
+        nav_tentang: 'Tentang',
+        nav_jenjang: 'Jenjang Pendidikan',
+        nav_fasilitas: 'Fasilitas',
+        nav_testimoni: 'Testimoni',
+        nav_keseharian: 'Keseharian',
+        nav_pendaftaran: 'Pendaftaran',
+        nav_cta: 'Hubungi Kami',
+        crumb_beranda: 'Beranda',
+        btn_daftar_sekarang: 'Daftar Sekarang',
+        btn_jenjang_lainnya: 'Jenjang Lainnya',
+        highlights_eyebrow: 'Keunggulan Program',
+        other_eyebrow: 'Jenjang Pendidikan Lainnya',
+        other_title: 'Satu Atap untuk Semua Jenjang',
+        other_card_link: 'Pelajari',
+        cta_title: 'Bergabunglah Bersama<br><span>Pah Tsung School</span>',
+        cta_desc: 'Daftarkan putra-putri Anda dan berikan mereka bekal terbaik — fasih tiga bahasa, berkarakter, dan siap bersaing di dunia global.',
+        footer_desc: 'Sekolah trilingual terkemuka di Jakarta Barat — membentuk generasi yang fasih tiga bahasa, bermoral, berkarakter, dan siap bersaing di era globalisasi.',
+        footer_col_sekolah: 'Sekolah',
+        footer_col_program: 'Program',
+        footer_col_kontak: 'Kontak',
+        footer_link_tentang: 'Tentang Pah Tsung',
+        footer_link_visimisi: 'Visi &amp; Misi',
+        footer_link_akreditasi: 'Akreditasi A',
+        footer_link_tk: 'Taman Kanak-Kanak',
+        footer_link_sd: 'Sekolah Dasar',
+        footer_link_trilingual: 'Program Trilingual',
+        footer_copyright: '© 2025 Sekolah Pah Tsung. Hak cipta dilindungi.',
+        overview_register_prefix: 'Daftar ke',
+        overview_img_alt_prefix: 'Siswa',
+        overview_img_alt_suffix: 'Pah Tsung',
+        kurikulum_eyebrow: 'Kurikulum & Pembelajaran',
+        kurikulum_subjects_label: 'Mata Pelajaran',
+        kurikulum_features_label: 'Keunggulan Kurikulum',
+      },
+      en: {
+        nav_tentang: 'About',
+        nav_jenjang: 'Education Levels',
+        nav_fasilitas: 'Facilities',
+        nav_testimoni: 'Testimonials',
+        nav_keseharian: 'School Life',
+        nav_pendaftaran: 'Admissions',
+        nav_cta: 'Contact Us',
+        crumb_beranda: 'Home',
+        btn_daftar_sekarang: 'Register Now',
+        btn_jenjang_lainnya: 'Other Levels',
+        highlights_eyebrow: 'Program Highlights',
+        other_eyebrow: 'Other Education Levels',
+        other_title: 'One Campus for Every Level',
+        other_card_link: 'Learn More',
+        cta_title: 'Join<br><span>Pah Tsung School</span>',
+        cta_desc: 'Enroll your child now and give them the best start — fluent in three languages, strong in character, and ready to compete on the world stage.',
+        footer_desc: 'A leading trilingual school in West Jakarta — shaping a generation that is fluent in three languages, principled, and ready to compete in a globalized world.',
+        footer_col_sekolah: 'School',
+        footer_col_program: 'Programs',
+        footer_col_kontak: 'Contact',
+        footer_link_tentang: 'About Pah Tsung',
+        footer_link_visimisi: 'Vision &amp; Mission',
+        footer_link_akreditasi: 'A Accreditation',
+        footer_link_tk: 'Kindergarten',
+        footer_link_sd: 'Elementary School',
+        footer_link_trilingual: 'Trilingual Program',
+        footer_copyright: '© 2025 Pah Tsung School. All rights reserved.',
+        overview_register_prefix: 'Register for',
+        overview_img_alt_prefix: 'Students of',
+        overview_img_alt_suffix: 'Pah Tsung',
+        kurikulum_eyebrow: 'Curriculum & Learning',
+        kurikulum_subjects_label: 'Subjects',
+        kurikulum_features_label: 'Curriculum Highlights',
+      },
+      zh: {
+        nav_tentang: '关于我们',
+        nav_jenjang: '教育阶段',
+        nav_fasilitas: '校园设施',
+        nav_testimoni: '家长评价',
+        nav_keseharian: '校园生活',
+        nav_pendaftaran: '招生入学',
+        nav_cta: '联系我们',
+        crumb_beranda: '首页',
+        btn_daftar_sekarang: '立即报名',
+        btn_jenjang_lainnya: '其他阶段',
+        highlights_eyebrow: '项目亮点',
+        other_eyebrow: '其他教育阶段',
+        other_title: '一站式全阶段教育',
+        other_card_link: '了解更多',
+        cta_title: '加入<br><span>Pah Tsung 学校</span>',
+        cta_desc: '现在为您的孩子报名，为他们提供最好的起点——精通三语、品格优良，做好在全球舞台上竞争的准备。',
+        footer_desc: '西雅加达领先的三语学校——培养精通三语、品德兼备、能够在全球化时代脱颖而出的新一代。',
+        footer_col_sekolah: '学校',
+        footer_col_program: '课程',
+        footer_col_kontak: '联系方式',
+        footer_link_tentang: '关于 Pah Tsung',
+        footer_link_visimisi: '愿景与使命',
+        footer_link_akreditasi: 'A 级认证',
+        footer_link_tk: '幼儿园',
+        footer_link_sd: '小学',
+        footer_link_trilingual: '三语课程',
+        footer_copyright: '© 2025 Pah Tsung 学校。保留所有权利。',
+        overview_register_prefix: '报名',
+        overview_img_alt_prefix: '',
+        overview_img_alt_suffix: '学生',
+        kurikulum_eyebrow: '课程与教学',
+        kurikulum_subjects_label: '课程科目',
+        kurikulum_features_label: '课程亮点',
+      },
+    };
+
     /* ═══════════════════════════════════════
        UTILS
     ═══════════════════════════════════════ */
     function getActiveId() {
       const hash = location.hash.replace('#', '') || 'sd';
-      return JENJANG.find(j => j.id === hash) ? hash : 'sd';
+      return JENJANG_I18N[currentLang].find(j => j.id === hash) ? hash : 'sd';
     }
 
     function getData(id) {
-      return JENJANG.find(j => j.id === id);
+      return JENJANG_I18N[currentLang].find(j => j.id === id);
     }
 
     /* ═══════════════════════════════════════
@@ -1478,7 +2010,7 @@
     ═══════════════════════════════════════ */
     function renderTabs(activeId) {
       const nav = document.getElementById('tab-nav');
-      nav.innerHTML = JENJANG.map(j => `
+      nav.innerHTML = JENJANG_I18N[currentLang].map(j => `
         <button class="tab-btn ${j.id === activeId ? 'active' : ''}" onclick="switchJenjang('${j.id}')">
           <span class="tab-chin">${j.chinLabel}</span>
           ${j.label} — ${j.fullName}
@@ -1506,6 +2038,7 @@
     }
 
     function renderOverview(d) {
+      const t = I18N_UI[currentLang];
       document.getElementById('overview-text').innerHTML = `
         <span class="section-eyebrow">${d.label} Pah Tsung School</span>
         <div class="gold-divider"></div>
@@ -1521,13 +2054,13 @@
         <p class="section-body">${d.desc1}</p>
         <p class="section-body">${d.desc2}</p>
         <a href="pendaftaran.html" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--navy);border-bottom:2px solid var(--gold);padding-bottom:2px;text-decoration:none;transition:color 0.2s,gap 0.2s;" onmouseover="this.style.color='var(--gold)';this.style.gap='12px'" onmouseout="this.style.color='var(--navy)';this.style.gap='8px'">
-          Daftar ke ${d.fullName} Pah Tsung
+          ${t.overview_register_prefix} ${d.fullName} Pah Tsung
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       `;
       const img = document.getElementById('overview-img');
       img.src = d.heroImg;
-      img.alt = `Siswa ${d.fullName} Pah Tsung`;
+      img.alt = `${t.overview_img_alt_prefix} ${d.fullName} ${t.overview_img_alt_suffix}`.replace(/\s+/g, ' ').trim();
       document.getElementById('badge-chin').textContent = d.chinLabel;
       document.getElementById('badge-sub').innerHTML = `${d.label}<br>${d.subLabel}`;
     }
@@ -1544,20 +2077,21 @@
     }
 
     function renderKurikulum(d) {
+      const t = I18N_UI[currentLang];
       document.getElementById('kurikulum-text').innerHTML = `
-        <span class="section-eyebrow" style="color:var(--gold)">Kurikulum & Pembelajaran</span>
+        <span class="section-eyebrow" style="color:var(--gold)">${t.kurikulum_eyebrow}</span>
         <div style="width:52px;height:3px;background:var(--gold);margin-bottom:22px;border-radius:2px;"></div>
         <h2 style="font-family:var(--font-display);font-size:clamp(22px,3vw,34px);font-weight:700;color:var(--white);line-height:1.25;letter-spacing:-0.5px;margin-bottom:18px;">${d.kurikulumTitle}</h2>
         <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:28px;">${d.kurikulumDesc}</p>
         <div class="subject-pills-wrap">
-          <span class="subject-pills-label">Mata Pelajaran</span>
+          <span class="subject-pills-label">${t.kurikulum_subjects_label}</span>
           <div class="subject-pills">
             ${d.subjects.map(s => `<span class="subject-pill">${s}</span>`).join('')}
           </div>
         </div>
       `;
       document.getElementById('kurikulum-accent').innerHTML = `
-        <span class="kurikulum-accent-label">Keunggulan Kurikulum</span>
+        <span class="kurikulum-accent-label">${t.kurikulum_features_label}</span>
         <h3>${d.fullName} Pah Tsung</h3>
         <div class="kurikulum-features">
           ${d.kurikulumFeatures.map(f => `
@@ -1569,7 +2103,7 @@
         </div>
         <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(245,196,0,0.15);">
           <a href="pendaftaran.html" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;border-bottom:2px solid rgba(245,196,0,0.4);padding-bottom:2px;transition:gap 0.2s,border-color 0.2s;" onmouseover="this.style.gap='12px';this.style.borderColor='var(--gold)'" onmouseout="this.style.gap='8px';this.style.borderColor='rgba(245,196,0,0.4)'">
-            Daftar Sekarang
+            ${t.btn_daftar_sekarang}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -1577,7 +2111,8 @@
     }
 
     function renderOther(activeId) {
-      const others = JENJANG.filter(j => j.id !== activeId);
+      const t = I18N_UI[currentLang];
+      const others = JENJANG_I18N[currentLang].filter(j => j.id !== activeId);
       document.getElementById('other-jenjang-grid').innerHTML = others.map(j => `
         <a class="other-card" href="jenjang-pendidikan.html#${j.id}" onclick="switchJenjang('${j.id}');return false;">
           <img class="other-card-img" src="${j.heroImg}" alt="${j.fullName}" />
@@ -1586,7 +2121,7 @@
             <h4>${j.fullName}</h4>
             <div class="other-card-grades">${j.subLabel}</div>
             <span class="other-card-link">
-              Pelajari
+              ${t.other_card_link}
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>
           </div>
@@ -1660,8 +2195,81 @@
     window.addEventListener('hashchange', () => {
       render(getActiveId(), true);
     });
+  </script>
 
-    render(getActiveId(), false);
+  <!-- LANGUAGE SWITCHER -->
+  <script>
+  (function () {
+    const FLAGS = {
+      id: 'https://flagcdn.com/w40/id.png',
+      en: 'https://flagcdn.com/w40/gb.png',
+      zh: 'https://flagcdn.com/w40/cn.png'
+    };
+    const CODES = { id: 'ID', en: 'EN', zh: '中文' };
+    const STORAGE_KEY = 'pahtsung_lang';
+
+    const switcher   = document.getElementById('langSwitcher');
+    const currentBtn = document.getElementById('langCurrentBtn');
+    const flagImg    = document.getElementById('langCurrentFlag');
+    const codeLabel  = document.getElementById('langCurrentCode');
+    if (!switcher) return;
+
+    let initialized = false;
+
+    function applyLang(lang) {
+      if (!I18N_UI[lang]) lang = 'id';
+      currentLang = lang;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (I18N_UI[lang][key] !== undefined) el.textContent = I18N_UI[lang][key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (I18N_UI[lang][key] !== undefined) el.innerHTML = I18N_UI[lang][key];
+      });
+
+      flagImg.src = FLAGS[lang];
+      codeLabel.textContent = CODES[lang];
+      document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : lang);
+
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      localStorage.setItem(STORAGE_KEY, lang);
+
+      // Render ulang konten jenjang yang sedang aktif dengan bahasa baru
+      render(getActiveId(), initialized);
+      initialized = true;
+    }
+
+    currentBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !switcher.classList.contains('open');
+      switcher.classList.toggle('open', willOpen);
+      currentBtn.setAttribute('aria-expanded', String(willOpen));
+    });
+
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyLang(btn.getAttribute('data-lang'));
+        switcher.classList.remove('open');
+        currentBtn.setAttribute('aria-expanded', 'false');
+        closeMenu();
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!switcher.contains(e.target)) {
+        switcher.classList.remove('open');
+        currentBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+    applyLang(saved || 'id');
+  })();
   </script>
 
 </body>
